@@ -6,7 +6,7 @@
     android:layout_marginBottom="20dp"
     android:elevation="6dp"
     android:padding="10dp"
-    android:background="@drawable/alert_background">
+    android:background="@android:color/transparent"> <!-- Make background transparent to let dynamic background appear -->
 
     <TextView
         android:id="@+id/alertMessage"
