@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#a61c1c</color>
+    <color name="colorPrimaryTinted">#ab2a3c</color>
+    <color name="colorPrimaryVariant">#590505</color>
+    <color name="colorSecondary">#8c710c</color>
+
+    <color name="colorBackground">#212529</color>
+    <color name="colorNavigationBar">#251B1B</color>
+
+    <color name="colorText">#FFFFFF</color>
+    <color name="colorTextVariant">#d3d1d1</color>
+    <color name="colorTextSecondary">#898787</color>
+
+    <color name="colorError">#BF4343</color>
+</resources>
