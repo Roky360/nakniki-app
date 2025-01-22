@@ -24,8 +24,8 @@
 
     <color name="colorError">#CA3F3F</color>
 
-    <color name="success_color">#4CAF50</color> <!-- Green -->
-    <color name="error_color">#F44336</color> <!-- Red -->
-    <color name="warning_color">#FFC107</color> <!-- Yellow -->
-    <color name="info_color">#2196F3</color> <!-- Blue -->
+    <color name="success_color">#4CAF50</color>
+    <color name="error_color">#F44336</color>
+    <color name="warning_color">#FFC107</color>
+    <color name="info_color">#2196F3</color>
 </resources>
