@@ -23,4 +23,9 @@
     <color name="colorTextSecondary">#898787</color>
 
     <color name="colorError">#CA3F3F</color>
+
+    <color name="success_color">#4CAF50</color>
+    <color name="error_color">#F44336</color>
+    <color name="warning_color">#FFC107</color>
+    <color name="info_color">#2196F3</color>
 </resources>
