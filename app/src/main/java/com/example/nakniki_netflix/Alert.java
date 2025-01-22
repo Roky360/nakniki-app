@@ -1,12 +1,15 @@
 package com.example.nakniki_netflix;
 
 import android.app.Activity;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 public class Alert {
 
@@ -39,21 +42,10 @@ public class Alert {
         TextView alertMessage = alertView.findViewById(R.id.alertMessage);
         alertMessage.setText(message);
 
-        // Set the background color dynamically based on the type
-        switch (type.toLowerCase()) {
-            case "success":
-                alertView.setBackground(activity.getDrawable(R.drawable.alert_background));
-                break;
-            case "error":
-                alertView.setBackground(activity.getDrawable(R.drawable.alert_background));
-                break;
-            case "warning":
-                alertView.setBackground(activity.getDrawable(R.drawable.alert_background));
-                break;
-            default:
-                alertView.setBackground(activity.getDrawable(R.drawable.alert_background));
-                break;
-        }
+        // Set the background color dynamically based on the type using color from colors.xml
+        int colorRes = getColorForType(type);  // Get the appropriate color resource
+        ColorDrawable colorDrawable = new ColorDrawable(ContextCompat.getColor(activity, colorRes));
+        alertView.setBackground(colorDrawable);
 
         // Show the alert view
         alertView.setVisibility(View.VISIBLE);
@@ -66,5 +58,19 @@ public class Alert {
                     .setDuration(1000)
                     .withEndAction(() -> alertView.setVisibility(View.GONE));
         }, 3000);
+    }
+
+    private int getColorForType(String type) {
+        // Simplify the logic by directly getting the color resource
+        switch (type.toLowerCase()) {
+            case "success":
+                return R.color.success_color;  // Success color defined in colors.xml
+            case "error":
+                return R.color.error_color;    // Error color defined in colors.xml
+            case "warning":
+                return R.color.warning_color;  // Warning color defined in colors.xml
+            default:
+                return R.color.info_color;    // Default (Info) color
+        }
     }
 }
