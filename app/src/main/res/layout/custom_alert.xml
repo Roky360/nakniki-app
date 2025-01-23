@@ -6,7 +6,7 @@
     android:layout_marginBottom="20dp"
     android:elevation="6dp"
     android:padding="10dp"
-    android:background="@android:color/transparent"> <!-- Make background transparent to let dynamic background appear -->
+    android:background="@android:color/transparent">
 
     <TextView
         android:id="@+id/alertMessage"
@@ -14,5 +14,5 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="16sp"
-        android:textColor="@android:color/white" />
+        android:textColor="@color/colorText" />
 </FrameLayout>

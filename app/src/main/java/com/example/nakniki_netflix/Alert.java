@@ -73,7 +73,7 @@ public class Alert {
     }
 
     private int getColorForType(String type) {
-        // return the color according the type
+        // return the color according the alert type
         switch (type.toLowerCase()) {
             case "success":
                 return R.color.success_color;
