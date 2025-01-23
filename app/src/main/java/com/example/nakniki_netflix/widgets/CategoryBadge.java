@@ -1,10 +1,12 @@
-package com.example.nakniki_netflix;
+package com.example.nakniki_netflix.widgets;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import android.graphics.Typeface;
 
 import androidx.annotation.Nullable;
+
+import com.example.nakniki_netflix.R;
 
 public class CategoryBadge extends androidx.appcompat.widget.AppCompatTextView {
 

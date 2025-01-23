@@ -1,4 +1,4 @@
-package com.example.nakniki_netflix;
+package com.example.nakniki_netflix.widgets;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
@@ -11,6 +11,8 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
+
+import com.example.nakniki_netflix.R;
 
 public class Alert {
 
