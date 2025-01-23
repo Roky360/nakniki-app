@@ -1,5 +1,6 @@
 package com.example.nakniki_netflix;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import com.example.nakniki_netflix.entities.User;
@@ -23,6 +24,7 @@ import com.example.nakniki_netflix.databinding.ActivityMainBinding;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
+    private static MainActivity instance;
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
@@ -68,5 +70,9 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         return NavigationUI.navigateUp(navController, appBarConfiguration)
                 || super.onSupportNavigateUp();
+    }
+
+    public static Context getAppContext() {
+        return instance.getApplicationContext();
     }
 }
