@@ -1,5 +1,6 @@
 package com.example.nakniki_netflix.widgets;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -9,7 +10,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nakniki_netflix.R;
+import com.example.nakniki_netflix.adapters.MovieCardAdapter;
 import com.example.nakniki_netflix.entities.Category;
+import com.example.nakniki_netflix.entities.CategoryWithMovies;
 import com.example.nakniki_netflix.view_models.MovieViewModel;
 
 public class CategoryRow extends LinearLayout {
@@ -19,6 +22,11 @@ public class CategoryRow extends LinearLayout {
     private RecyclerView moviesRecyclerView;
     private MovieViewModel movieViewModel;
 
+    /**
+     * Constructor, a category which contains movies which belong to it
+     * @param context The context of the activity
+     * @param attrs The attributes of the view
+     */
     public CategoryRow(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
@@ -36,7 +44,13 @@ public class CategoryRow extends LinearLayout {
         moviesRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
     }
 
-    public void setCategory(Category category) {
-        categoryName.setText(category.getName());
+    /**
+     * Sets the category name and the movies in the category
+     * @param categoryWithMovies A category... with movies!!
+     */
+    public void setCategory(CategoryWithMovies categoryWithMovies) {
+        categoryName.setText(categoryWithMovies.getCategory());
+        MovieCardAdapter movieAdapter = new MovieCardAdapter((Activity) getContext(), categoryWithMovies.getMovies());
+        moviesRecyclerView.setAdapter(movieAdapter);
     }
 }
