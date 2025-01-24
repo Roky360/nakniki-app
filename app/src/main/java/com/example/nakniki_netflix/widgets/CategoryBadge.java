@@ -26,8 +26,8 @@ public class CategoryBadge extends androidx.appcompat.widget.AppCompatTextView {
 
     private void init() {
         // set default padding, text size and background
-        setPadding(24, 16, 24, 16);
-        setTextSize(20);
+        setPadding(16, 10, 16, 10);
+        setTextSize(14);
         setTextColor(getResources().getColor(R.color.colorText));
         setBackgroundResource(R.drawable.category_badge_background);
         setTypeface(getTypeface(), Typeface.BOLD);

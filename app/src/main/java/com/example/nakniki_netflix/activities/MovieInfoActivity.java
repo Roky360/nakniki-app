@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -12,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 import com.example.nakniki_netflix.R;
 import com.example.nakniki_netflix.entities.Movie;
+import com.example.nakniki_netflix.widgets.CategoryBadge;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -21,7 +23,6 @@ public class MovieInfoActivity extends AppCompatActivity {
 
     private ImageView movieThumbnail;
     private TextView movieTitle;
-    private TextView movieCategories;
     private TextView moviePublishedDate;
     private TextView movieCast;
     private TextView movieDescription;
@@ -35,7 +36,6 @@ public class MovieInfoActivity extends AppCompatActivity {
         // Initialize views
         movieThumbnail = findViewById(R.id.movie_thumbnail);
         movieTitle = findViewById(R.id.movie_title);
-        movieCategories = findViewById(R.id.movie_categories);
         moviePublishedDate = findViewById(R.id.movie_published_date);
         movieCast = findViewById(R.id.movie_cast);
         movieDescription = findViewById(R.id.movie_description);
@@ -64,30 +64,51 @@ public class MovieInfoActivity extends AppCompatActivity {
             movieThumbnail.setImageResource(R.drawable.default_avatar); // Default placeholder
         }
 
-        // Set movie details
+        // Set movie title
         movieTitle.setText(movie.getName() != null ? movie.getName() : "Unknown Title");
 
-        // Safely join categories
+        // Clear previous badges
+        LinearLayout categoriesContainer = findViewById(R.id.categories_container);
+        categoriesContainer.removeAllViews();
+
+        // Add categories dynamically
         if (movie.getCategories() != null) {
-            movieCategories.setText(String.join(", ", movie.getCategories()));
+            for (String category : movie.getCategories()) {
+                // Create a badge
+                CategoryBadge badge = new CategoryBadge(this);
+                badge.setCategoryName(category);
+
+                // Set margins
+                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.WRAP_CONTENT,
+                        LinearLayout.LayoutParams.WRAP_CONTENT
+                );
+                layoutParams.setMargins(8, 0, 8, 0); // Left, Top, Right, Bottom margins
+                badge.setLayoutParams(layoutParams);
+
+                // Add badge to the container
+                categoriesContainer.addView(badge);
+            }
         } else {
-            movieCategories.setText("Unknown Category");
+            // Handle missing categories
+            CategoryBadge badge = new CategoryBadge(this);
+            badge.setCategoryName("Unknown Category");
+            categoriesContainer.addView(badge);
         }
 
-        // Safely format the published date
+        // Format published date
         moviePublishedDate.setText(movie.getPublished() != null ? formatDate(movie.getPublished()) : "Unknown Date");
 
-        // Safely join actors
+        // Set cast
         if (movie.getActors() != null) {
             movieCast.setText(String.join(", ", movie.getActors()));
         } else {
             movieCast.setText("Unknown Actors");
         }
 
-        // Safely set description
+        // Set description
         movieDescription.setText(movie.getDescription() != null ? movie.getDescription() : "No description available.");
     }
-
 
 
     // TODO navigate to the watch movie
@@ -106,5 +127,4 @@ public class MovieInfoActivity extends AppCompatActivity {
             return "Unknown Date";
         }
     }
-
 }
