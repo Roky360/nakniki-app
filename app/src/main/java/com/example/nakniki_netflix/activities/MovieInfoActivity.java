@@ -1,15 +1,12 @@
 package com.example.nakniki_netflix.activities;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
+import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.bumptech.glide.Glide;
 import com.example.nakniki_netflix.R;
 import com.example.nakniki_netflix.entities.Movie;
@@ -27,6 +24,7 @@ public class MovieInfoActivity extends AppCompatActivity {
     private TextView movieCast;
     private TextView movieDescription;
     private Button watchNowButton;
+    private ImageView exitButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +38,7 @@ public class MovieInfoActivity extends AppCompatActivity {
         movieCast = findViewById(R.id.movie_cast);
         movieDescription = findViewById(R.id.movie_description);
         watchNowButton = findViewById(R.id.watch_now_button);
+        exitButton = findViewById(R.id.exit_button);
 
         // Get the passed Movie object from the Intent
         Movie movie = (Movie) getIntent().getSerializableExtra("movie");
@@ -47,6 +46,11 @@ public class MovieInfoActivity extends AppCompatActivity {
         if (movie != null) {
             populateMovieDetails(movie);
         }
+
+        // Set an OnClickListener for the exit button
+        exitButton.setOnClickListener(v -> {
+            finish(); // Close the current activity and return to the previous one
+        });
 
         // TODO - navigate to the watch movie
         // watchNowButton.setOnClickListener(v -> navigateToWatchMovie(movie));
@@ -108,15 +112,9 @@ public class MovieInfoActivity extends AppCompatActivity {
 
         // Set description
         movieDescription.setText(movie.getDescription() != null ? movie.getDescription() : "No description available.");
+
+        // TODO add for you movies
     }
-
-
-    // TODO navigate to the watch movie
-//    private void navigateToWatchMovie(Movie movie) {
-//        Intent intent = new Intent(this, WatchMovieActivity.class);
-//        intent.putExtra("movie_id", movie.getId());
-//        startActivity(intent);
-//    }
 
     private String formatDate(Date date) {
         try {
