@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
+import retrofit2.Call;
+import retrofit2.Response;
+
 public class CategoryRepository {
     private final CategoryDao categoryDao;
     private final CategoryAPI categoryAPI;
@@ -36,19 +39,19 @@ public class CategoryRepository {
     public void insertCategory(Category category) {
         executor.execute(() -> {
             categoryDao.insert(category); // Insert into local DB
-            categoryAPI.createCategory(tokenStorage.getToken(), category); // Push to remote API
+//            categoryAPI.createCategory(tokenStorage.getToken(), category); // Push to remote API
         });
     }
 
     private void refreshCategories() {
         executor.execute(() -> {
             try {
-                List<Category> categories = categoryAPI.getAllCategories(tokenStorage.getToken()).execute().body();
+                Call<List<Category>> call = categoryAPI.getAllCategories(tokenStorage.getToken());
+                Response<List<Category>> res = call.execute();
+                List<Category> categories = res.body();
                 if (categories != null) {
                     // sync api data to db
-                    for (Category category : categories) {
-                        categoryDao.insert(category);
-                    }
+                    categoryDao.insertAll(categories.stream().toArray(Category[]::new));
                 }
             } catch (Exception e) {
                 e.printStackTrace(); // TODO: remove print

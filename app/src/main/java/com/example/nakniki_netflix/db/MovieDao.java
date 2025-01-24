@@ -6,12 +6,14 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.TypeConverters;
 
+import com.example.nakniki_netflix.db.converters.DateConverter;
+import com.example.nakniki_netflix.db.converters.ListConverter;
 import com.example.nakniki_netflix.entities.Movie;
 
 import java.util.List;
 
 @Dao
-@TypeConverters({Converters.class})
+@TypeConverters({ListConverter.class, DateConverter.class})
 public interface MovieDao {
     @Query("SELECT * FROM movies")
     List<Movie> getAll();

@@ -3,7 +3,15 @@ package com.example.nakniki_netflix;
 import android.content.Context;
 import android.os.Bundle;
 
+import com.example.nakniki_netflix.api.CategoryAPI;
+import com.example.nakniki_netflix.api.RetrofitClient;
+import com.example.nakniki_netflix.db.AppDB;
+import com.example.nakniki_netflix.db.CategoryDao;
+import com.example.nakniki_netflix.entities.Category;
 import com.example.nakniki_netflix.entities.User;
+import com.example.nakniki_netflix.repositories.CategoryRepository;
+import com.example.nakniki_netflix.view_models.CategoryViewModel;
+import com.example.nakniki_netflix.view_models.CategoryViewModelFactory;
 import com.example.nakniki_netflix.view_models.UserViewModel;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -30,11 +38,13 @@ public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
 
     private UserViewModel userViewModel;
-    private int i = 0;
+    private CategoryViewModel categoryViewModel;
+    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        instance = this;
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -55,14 +65,33 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
         // view model test
-        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-        userViewModel.getUserData().observe(this, user -> {
-            if (user != null) {
-                Objects.requireNonNull(getSupportActionBar()).setTitle(user.getUsername());
+//        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+//        userViewModel.getUserData().observe(this, user -> {
+//            if (user != null) {
+//                Objects.requireNonNull(getSupportActionBar()).setTitle(user.getUsername());
+//            }
+//        });
+//
+//        binding.fab.setOnClickListener(view -> userViewModel.getUserData().setValue(new User("0", "Hemihemi " + i++, "", "", "")));
+
+        CategoryDao categoryDao = AppDB.getInstance(this).categoryDao();
+        CategoryAPI categoryAPI = RetrofitClient.getInstance().create(CategoryAPI.class);
+        CategoryRepository repository = new CategoryRepository(categoryDao, categoryAPI);
+        categoryViewModel = new ViewModelProvider(this, new CategoryViewModelFactory(repository)).get(CategoryViewModel.class);
+
+        categoryViewModel.getAllCategories().observe(this, categories -> {
+            StringBuilder cats = new StringBuilder();
+            for (Category category : categories) {
+                cats.append(category.getName()).append("\n");
             }
+            binding.catList.setText(cats.toString());
         });
 
-        binding.fab.setOnClickListener(view -> userViewModel.getUserData().setValue(new User("0", "Hemihemi " + i++, "", "", "")));
+        binding.fab.setOnClickListener(view -> {
+            categoryViewModel.addCategory(
+                    new Category(String.valueOf(i), "New category! " + i++, true)
+            );
+        });
     }
 
     @Override

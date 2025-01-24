@@ -11,15 +11,15 @@ public class User {
     @NonNull
     private final String id;
 
-    private String userName;
+    private String username;
     private String email;
     private String profilePic;
     private String token;
 
     // constructor
-    public User(@NonNull String id, String userName, String email, String profilePic, String token) {
+    public User(@NonNull String id, String username, String email, String profilePic, String token) {
         this.id = id;
-        this.userName = userName;
+        this.username = username;
         this.email = email;
         this.profilePic = profilePic;
         this.token = token;
@@ -31,11 +31,11 @@ public class User {
     }
 
     public String getUsername() {
-        return userName;
+        return username;
     }
 
     public void setUsername(String username) {
-        this.userName = username;
+        this.username = username;
     }
 
     public String getEmail() {

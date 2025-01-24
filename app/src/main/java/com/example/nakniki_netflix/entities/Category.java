@@ -4,13 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+
 @Entity(tableName = "categories")
 public class Category {
 
     @PrimaryKey(autoGenerate = false)
     @NonNull
+    @SerializedName("_id")
     private final String id;
-
     private String name;
     private boolean promoted;
 
@@ -22,6 +24,7 @@ public class Category {
     }
 
     // Getters and Setters
+    @NonNull
     public String getId() {
         return id;
     }
