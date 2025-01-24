@@ -3,6 +3,12 @@ package com.example.nakniki_netflix.entities;
 import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+import androidx.room.TypeConverter;
+import androidx.room.TypeConverters;
+
+import com.example.nakniki_netflix.db.converters.DateConverter;
+import com.example.nakniki_netflix.db.converters.ListConverter;
+import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,16 +18,19 @@ import java.util.List;
 public class Movie implements Serializable {
 
     @PrimaryKey(autoGenerate = false)
+    @SerializedName("_id")
     @NonNull
     private final String id;
 
     private String name;
+    @TypeConverters(DateConverter.class)
     private Date published;
+    @TypeConverters(ListConverter.class)
     private List<String> actors;
     private String thumbnail;
     private String description;
     private int length;
-
+    @TypeConverters(ListConverter.class)
     List<String> categories;
 
     // constructor
