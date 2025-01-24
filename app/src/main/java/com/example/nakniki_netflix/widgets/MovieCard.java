@@ -1,6 +1,7 @@
 package com.example.nakniki_netflix.widgets;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.nakniki_netflix.R;
 import com.example.nakniki_netflix.entities.Movie;
+import com.example.nakniki_netflix.activities.MovieInfoActivity;
 
 public class MovieCard extends RecyclerView.ViewHolder {
 
@@ -59,6 +61,10 @@ public class MovieCard extends RecyclerView.ViewHolder {
             // TODO redirect to the movie details page
             Alert alert = new Alert(activity);
             alert.show("You clicked on " + this.movieName.getText(), "success");
+
+            Intent intent = new Intent(activity, MovieInfoActivity.class);
+            intent.putExtra("movie", movie); // Pass the movie object
+            activity.startActivity(intent);
         });
     }
 }

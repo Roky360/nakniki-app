@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Flex container for thumbnail and details -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="start"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="20dp">
+
+            <!-- Thumbnail -->
+            <ImageView
+                android:id="@+id/movie_thumbnail"
+                android:layout_width="140dp"
+                android:layout_height="240dp"
+                android:scaleType="centerCrop" />
+
+            <!-- Details -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:orientation="vertical"
+                android:layout_marginTop="20dp">
+
+                <TextView
+                    android:id="@+id/movie_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:textColor="@color/colorText"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/movie_categories"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorText"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/movie_published_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/colorText"
+                    android:layout_marginBottom="4dp" />
+
+                <TextView
+                    android:id="@+id/movie_cast"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/colorText"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Watch Now Button -->
+        <Button
+            android:id="@+id/watch_now_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Watch Now"
+            android:textSize="16sp"
+            style="@style/ButtonMain"
+            android:layout_marginBottom="16dp" />
+
+        <!-- Description -->
+        <TextView
+            android:id="@+id/movie_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorText"
+            android:layout_marginBottom="20dp" />
+    </LinearLayout>
+</ScrollView>
