@@ -25,5 +25,7 @@
         android:clipToPadding="false"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:scrollbars="none"/>
+        android:scrollbars="none"
+        android:background="@android:color/transparent"/>
+
 </LinearLayout>

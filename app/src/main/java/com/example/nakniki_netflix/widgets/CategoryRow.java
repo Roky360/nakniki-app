@@ -37,9 +37,16 @@ public class CategoryRow extends LinearLayout {
      * @param context
      */
     private void init(Context context) {
+
+        LayoutInflater.from(context).inflate(R.layout.category_row, this, true);
+
         // Accessing the category_row XML, Creates a new ID
         categoryName = findViewById(R.id.category_name);
         moviesRecyclerView = findViewById(R.id.movies_recycler_view);
+
+        if (moviesRecyclerView == null) {
+            throw new NullPointerException("RecyclerView is null. Check layout file IDs.");
+        }
         // Sets te RecyclerView to be horizontal
         moviesRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
     }
