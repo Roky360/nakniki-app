@@ -20,7 +20,7 @@
             android:src="@drawable/ic_left"
             android:layout_gravity="start"
             android:layout_marginBottom="8dp"
-            android:contentDescription="Exit"
+            android:contentDescription="@string/go_back"
             android:padding="8dp"
             app:tint="@color/colorText" />
 
@@ -85,7 +85,7 @@
             android:id="@+id/watch_now_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Watch Now"
+            android:text="@string/watch_now"
             android:textSize="16sp"
             style="@style/ButtonMain"
             android:layout_marginBottom="16dp" />
