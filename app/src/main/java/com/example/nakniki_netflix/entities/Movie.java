@@ -10,11 +10,12 @@ import com.example.nakniki_netflix.db.converters.DateConverter;
 import com.example.nakniki_netflix.db.converters.ListConverter;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity(tableName = "movies")
-public class Movie {
+public class Movie implements Serializable {
 
     @PrimaryKey(autoGenerate = false)
     @SerializedName("_id")

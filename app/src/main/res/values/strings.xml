@@ -7,6 +7,15 @@
     <string name="next">Next</string>
     <string name="previous">Previous</string>
 
+    <string name="login_button_text">Login</string>
+    <string name="login_title">Login to your Nakniki-Account</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="go_back">Go back</string>
+    <string name="watch_now">Watch Now</string>
+
+    <string name="signup">Signup</string>
+
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
         volutpat, dolor id interdum ullamcorper, risus dolor egestas lectus, sit amet mattis purus
