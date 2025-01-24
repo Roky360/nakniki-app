@@ -8,6 +8,7 @@ import androidx.room.TypeConverters;
 
 import com.example.nakniki_netflix.db.converters.DateConverter;
 import com.example.nakniki_netflix.db.converters.ListConverter;
+import com.google.gson.annotations.SerializedName;
 
 import java.util.Date;
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.List;
 public class Movie {
 
     @PrimaryKey(autoGenerate = false)
+    @SerializedName("_id")
     @NonNull
     private final String id;
 

@@ -3,6 +3,7 @@ package com.example.nakniki_netflix.db;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.TypeConverters;
 
@@ -24,10 +25,10 @@ public interface MovieDao {
     @Query("SELECT * FROM movies WHERE categories LIKE '%' || :categoryId || '%'")
     List<Movie> getByCategory(String categoryId);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insert(Movie movie);
 
-    @Insert
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(Movie... movies);
 
     @Delete

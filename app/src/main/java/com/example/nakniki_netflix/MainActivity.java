@@ -3,24 +3,17 @@ package com.example.nakniki_netflix;
 import android.content.Context;
 import android.os.Bundle;
 
-import com.example.nakniki_netflix.api.CategoryAPI;
-import com.example.nakniki_netflix.api.RetrofitClient;
-import com.example.nakniki_netflix.db.AppDB;
-import com.example.nakniki_netflix.db.CategoryDao;
-import com.example.nakniki_netflix.entities.Category;
-import com.example.nakniki_netflix.entities.User;
-import com.example.nakniki_netflix.repositories.CategoryRepository;
+import com.example.nakniki_netflix.api.Resource;
+import com.example.nakniki_netflix.entities.Movie;
+import com.example.nakniki_netflix.repositories.MovieRepository;
 import com.example.nakniki_netflix.view_models.CategoryViewModel;
-import com.example.nakniki_netflix.view_models.CategoryViewModelFactory;
+import com.example.nakniki_netflix.view_models.MovieViewModel;
+import com.example.nakniki_netflix.view_models.MovieViewModelFactory;
 import com.example.nakniki_netflix.view_models.UserViewModel;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.nakniki_netflix.view_models.ViewModelUtils;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.view.View;
-
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -29,7 +22,7 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.nakniki_netflix.databinding.ActivityMainBinding;
 
-import java.util.Objects;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static MainActivity instance;
@@ -39,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     private UserViewModel userViewModel;
     private CategoryViewModel categoryViewModel;
+    private MovieViewModel movieViewModel;
     int i = 0;
 
     @Override
@@ -74,22 +68,88 @@ public class MainActivity extends AppCompatActivity {
 //
 //        binding.fab.setOnClickListener(view -> userViewModel.getUserData().setValue(new User("0", "Hemihemi " + i++, "", "", "")));
 
-        CategoryDao categoryDao = AppDB.getInstance(this).categoryDao();
-        CategoryAPI categoryAPI = RetrofitClient.getInstance().create(CategoryAPI.class);
-        CategoryRepository repository = new CategoryRepository(categoryDao, categoryAPI);
-        categoryViewModel = new ViewModelProvider(this, new CategoryViewModelFactory(repository)).get(CategoryViewModel.class);
+//        CategoryDao categoryDao = AppDB.getInstance(this).categoryDao();
+//        CategoryAPI categoryAPI = RetrofitClient.getInstance().create(CategoryAPI.class);
+//        CategoryRepository repository = new CategoryRepository(categoryDao, categoryAPI);
 
-        categoryViewModel.getAllCategories().observe(this, categories -> {
-            StringBuilder cats = new StringBuilder();
-            for (Category category : categories) {
-                cats.append(category.getName()).append("\n");
-            }
-            binding.catList.setText(cats.toString());
-        });
+        // category view model test
+//        categoryViewModel = new ViewModelProvider(this, new CategoryViewModelFactory(new CategoryRepository())).get(CategoryViewModel.class);
+//
+//        categoryViewModel.getAllCategories().observe(this, categories -> {
+//            if (categories.getStatus() == Resource.Status.SUCCESS) {
+//                StringBuilder cats = new StringBuilder();
+//                for (Category category : categories.getData()) {
+//                    cats.append(category.getName()).append("\n");
+//                }
+//                binding.catList.setText(cats.toString());
+//            } else if (categories.getStatus() == Resource.Status.ERROR) {
+//                binding.catList.setText(categories.getMessage());
+//            } else {
+//                binding.catList.setText("Loading...");
+//            }
+//        });
+//
+//        binding.fab.setOnClickListener(view -> {
+//            categoryViewModel.addCategory(
+//                    new Category(String.valueOf(i), "New category! " + i++, true)
+//            );
+//        });
+
+        // movies view model test
+        movieViewModel = new ViewModelProvider(this, new MovieViewModelFactory(new MovieRepository())).get(MovieViewModel.class);
+
+
+//        movieViewModel.getMoviesByCategories().observe(this, catWithMovies -> {
+//            if (catWithMovies.getStatus() == Resource.Status.SUCCESS) {
+//                StringBuilder cats = new StringBuilder();
+//                List<CategoryWithMovies> data = catWithMovies.getData();
+//                for (CategoryWithMovies cat : data) {
+//                    StringBuilder movies = new StringBuilder();
+//                    movies.append(cat.getCategory()).append(":\n");
+//                    for (Movie m : cat.getMovies()) {
+//                        movies.append("\t").append(m.getName()).append("\n");
+//                    }
+//                    cats.append(movies);
+//                }
+//                binding.catList.setText(cats.toString());
+//            } else if (catWithMovies.getStatus() == Resource.Status.ERROR) {
+//                binding.catList.setText(catWithMovies.getMessage());
+//            } else {
+//                binding.catList.setText("Loading...");
+//            }
+//        });
+
+//        movieViewModel.searchMovies("a").observe(this, resource -> {
+//            if (resource.getStatus() == Resource.Status.SUCCESS) {
+//                List<Movie> res = resource.getData();
+//                StringBuilder movies = new StringBuilder();
+//                for (Movie m : res) {
+//                    movies.append(m.getName()).append("\n");
+//                }
+//
+//                binding.catList.setText(res.toString());
+//            } else {
+//                binding.catList.setText(resource.getMessage());
+//            }
+//        });
 
         binding.fab.setOnClickListener(view -> {
-            categoryViewModel.addCategory(
-                    new Category(String.valueOf(i), "New category! " + i++, true)
+            ViewModelUtils.observeUntil(movieViewModel.searchMovies(binding.editText.getText().toString()),
+                    resource -> {
+                        if (resource.getStatus() == Resource.Status.SUCCESS) {
+                            List<Movie> res = resource.getData();
+                            StringBuilder movies = new StringBuilder();
+                            for (Movie m : res) {
+                                movies.append(m.getName()).append("\n");
+                            }
+
+                            binding.catList.setText(movies.toString());
+                        } else {
+                            binding.catList.setText(resource.getMessage());
+                        }
+
+                    },
+                    resource -> resource.getStatus() == Resource.Status.SUCCESS
             );
         });
     }

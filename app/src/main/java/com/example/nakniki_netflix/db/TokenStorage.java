@@ -10,9 +10,10 @@ import com.example.nakniki_netflix.MainActivity;
 public class TokenStorage {
     private static final String PREF_NAME = "auth_prefs";
     private static final String KEY_TOKEN = "jwt_token";
+    private static TokenStorage instance;
     private SharedPreferences sharedPreferences;
 
-    public TokenStorage() {
+    private TokenStorage() {
         try {
             String masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC);
             sharedPreferences = EncryptedSharedPreferences.create(
@@ -25,6 +26,13 @@ public class TokenStorage {
         } catch (Exception e) {
             e.printStackTrace(); // TODO: remove print
         }
+    }
+
+    public static TokenStorage getInstance() {
+        if (instance == null) {
+            instance = new TokenStorage();
+        }
+        return instance;
     }
 
     public void saveToken(String token) {
