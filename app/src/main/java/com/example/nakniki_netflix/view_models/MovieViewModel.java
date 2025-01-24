@@ -1,7 +1,6 @@
 package com.example.nakniki_netflix.view_models;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 
 import com.example.nakniki_netflix.api.Resource;

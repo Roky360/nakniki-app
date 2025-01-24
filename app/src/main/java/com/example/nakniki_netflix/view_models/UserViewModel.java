@@ -1,21 +1,37 @@
 package com.example.nakniki_netflix.view_models;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.nakniki_netflix.api.Resource;
 import com.example.nakniki_netflix.entities.User;
+import com.example.nakniki_netflix.repositories.UserRepository;
 
 public class UserViewModel extends ViewModel {
-    private MutableLiveData<User> userData;
+    private final UserRepository repository;
+    private LiveData<Resource<User>> user; // if null - user is logged out
 
-    public UserViewModel() {
-        userData = new MutableLiveData<>();
+    public UserViewModel(UserRepository repository) {
+        this.repository = repository;
     }
 
-    public MutableLiveData<User> getUserData() {
-        if (userData == null) {
-            userData = new MutableLiveData<>();
+    public LiveData<Resource<User>> getUserData() {
+        if (user == null) {
+            user = repository.getUser(repository.userId);
         }
-        return userData;
+        return user;
+    }
+
+    public LiveData<Resource<Void>> login(String username, String password) {
+        return repository.login(username, password);
+    }
+
+    public LiveData<Resource<Void>> logout() {
+        if (user != null && user.getValue() != null) {
+            return repository.logout(user.getValue().getData());
+        } else {
+            return new MutableLiveData<>(Resource.success(null));
+        }
     }
 }

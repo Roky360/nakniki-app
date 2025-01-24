@@ -4,28 +4,30 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.annotations.SerializedName;
+
 @Entity(tableName = "users")
 public class User {
 
     @PrimaryKey(autoGenerate = false)
+    @SerializedName("_id")
     @NonNull
     private final String id;
 
     private String username;
     private String email;
     private String profilePic;
-    private String token;
 
     // constructor
-    public User(@NonNull String id, String username, String email, String profilePic, String token) {
+    public User(@NonNull String id, String username, String email, String profilePic) {
         this.id = id;
         this.username = username;
         this.email = email;
         this.profilePic = profilePic;
-        this.token = token;
     }
 
     // Getters and Setters
+    @NonNull
     public String getId() {
         return id;
     }
@@ -52,13 +54,5 @@ public class User {
 
     public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 }

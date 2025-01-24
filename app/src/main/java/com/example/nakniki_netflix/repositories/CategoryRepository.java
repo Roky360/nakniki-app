@@ -24,7 +24,7 @@ public class CategoryRepository {
     private final Executor executor;
     private final TokenStorage tokenStorage;
 
-    public CategoryRepository(/*CategoryDao categoryDao, CategoryAPI categoryAPI*/) {
+    public CategoryRepository() {
         CategoryDao categoryDao = AppDB.getInstance(MainActivity.getAppContext()).categoryDao();
         CategoryAPI categoryAPI = RetrofitClient.getInstance().create(CategoryAPI.class);
         this.categoryDao = categoryDao;
