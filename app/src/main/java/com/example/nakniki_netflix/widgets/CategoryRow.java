@@ -10,30 +10,33 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nakniki_netflix.R;
 import com.example.nakniki_netflix.entities.Category;
-import com.example.nakniki_netflix.adapters.MovieAdapter;
+import com.example.nakniki_netflix.view_models.MovieViewModel;
 
 public class CategoryRow extends LinearLayout {
-    private TextView categoryTitle;
+    // The text above the movie cards, the category name
+    private TextView categoryName;
+    // The RecyclerView that holds the movie cards
     private RecyclerView moviesRecyclerView;
-    private MovieAdapter movieAdapter;
+    private MovieViewModel movieViewModel;
 
     public CategoryRow(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context);
     }
 
+    /**
+     * Initiates the Category row
+     * @param context
+     */
     private void init(Context context) {
-        LayoutInflater.from(context).inflate(R.layout.item_category_row, this, true);
-
-        categoryTitle = findViewById(R.id.category_title);
+        // Accessing the category_row XML, Creates a new ID
+        categoryName = findViewById(R.id.category_name);
         moviesRecyclerView = findViewById(R.id.movies_recycler_view);
-
+        // Sets te RecyclerView to be horizontal
         moviesRecyclerView.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
     }
 
     public void setCategory(Category category) {
-        categoryTitle.setText(category.getCategoryName());
-        movieAdapter = new MovieAdapter(getContext(), category.getMovies());
-        moviesRecyclerView.setAdapter(movieAdapter);
+        categoryName.setText(category.getName());
     }
 }
