@@ -13,8 +13,18 @@
     <string name="password">Password</string>
     <string name="go_back">Go back</string>
     <string name="watch_now">Watch Now</string>
-
+    <string name="create_account">Create new Nakniki-Account</string>
+    <string name="select_pic">Select a Profile Picture:</string>
+    <string name="email">Email:</string>
+    <string name="enter_username">Enter your username</string>
+    <string name="enter_email">Enter your email</string>
+    <string name="Password">Password:</string>
     <string name="signup">Signup</string>
+    <string name="enter_password">Enter your password</string>
+    <string name="verify_password">Verify Password:</string>
+    <string name="re_enter_password">Re-enter your password</string>
+    <string name="login">Login</string>
+    <string name="create">Create Account</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
