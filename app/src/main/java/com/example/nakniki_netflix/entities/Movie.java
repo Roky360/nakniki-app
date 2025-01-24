@@ -4,11 +4,12 @@ import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 @Entity(tableName = "movies")
-public class Movie {
+public class Movie implements Serializable {
 
     @PrimaryKey(autoGenerate = false)
     @NonNull
