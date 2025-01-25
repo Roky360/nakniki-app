@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.example.nakniki_netflix.MainActivity;
 import com.example.nakniki_netflix.MyApplication;
 import com.example.nakniki_netflix.api.CategoryAPI;
+import com.example.nakniki_netflix.api.ErrorResponse;
 import com.example.nakniki_netflix.api.Resource;
 import com.example.nakniki_netflix.api.RetrofitClient;
 import com.example.nakniki_netflix.db.AppDB;
@@ -62,10 +63,10 @@ public class CategoryRepository {
                     categoryDao.insertAll(categories.stream().toArray(Category[]::new));
                     liveData.postValue(Resource.success(categories));
                 } else {
-                    liveData.postValue(Resource.error(res.message(), null));
+                    String errorMessage = ErrorResponse.getErrorMessage(res);
+                    liveData.postValue(Resource.error(errorMessage, null));
                 }
             } catch (Exception e) {
-                e.printStackTrace(); // TODO: remove print
                 liveData.postValue(Resource.error(e.getMessage(), null));
             }
         });

@@ -65,7 +65,8 @@ public class UserRepository {
                     if (loginResult != null) {
                         liveData.postValue(Resource.error(loginResult.getError(), null));
                     } else {
-                        liveData.postValue(Resource.error(res.message(), null));
+                        String errorMessage = ErrorResponse.getErrorMessage(res);
+                        liveData.postValue(Resource.error(errorMessage, null));
                     }
                 }
             } catch (Exception e) {
@@ -94,7 +95,8 @@ public class UserRepository {
                     userDao.insert(user);
                     liveData.postValue(Resource.success(user));
                 } else {
-                    liveData.postValue(Resource.error(res.message(), null));
+                    String errorMessage = ErrorResponse.getErrorMessage(res);
+                    liveData.postValue(Resource.error(errorMessage, null));
                 }
             } catch (Exception e) {
                 liveData.postValue(Resource.error(e.getMessage(), null));
@@ -111,14 +113,12 @@ public class UserRepository {
         executor.execute(() -> {
             try {
                 SignupForm signupForm = new SignupForm(username, password, email, profilePic);
-                Log.i("TAG","createUser: " + signupForm.getUsername() + " " + signupForm.getPassword() + " " + signupForm.getEmail() + " " + signupForm.getProfile_pic());
                 Response<Void> res = userAPI.createUser(signupForm).execute();
-
 
                 if (res.code() == 201) {
                     liveData.postValue(Resource.success(null));
                 } else {
-                    String errorMessage = ErrorResponse.getErrorMessage(res);  // Get error message from response
+                    String errorMessage = ErrorResponse.getErrorMessage(res);
                     liveData.postValue(Resource.error(errorMessage, null));
                 }
             } catch (Exception e) {

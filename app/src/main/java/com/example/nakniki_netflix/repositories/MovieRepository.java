@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.nakniki_netflix.MainActivity;
 import com.example.nakniki_netflix.MyApplication;
+import com.example.nakniki_netflix.api.ErrorResponse;
 import com.example.nakniki_netflix.api.MovieAPI;
 import com.example.nakniki_netflix.api.Resource;
 import com.example.nakniki_netflix.api.RetrofitClient;
@@ -53,7 +54,8 @@ public class MovieRepository {
                     );
                     liveData.postValue(Resource.success(categories));
                 } else {
-                    liveData.postValue(Resource.error(res.message(), null));
+                    String errorMessage = ErrorResponse.getErrorMessage(res);
+                    liveData.postValue(Resource.error(errorMessage, null));
                 }
             } catch (Exception e) {
                 liveData.postValue(Resource.error(e.getMessage(), null));
@@ -76,7 +78,8 @@ public class MovieRepository {
                     movieDao.insert(movie);
                     liveData.postValue(Resource.success(movie));
                 } else {
-                    liveData.postValue(Resource.error(res.message(), null));
+                    String errorMessage = ErrorResponse.getErrorMessage(res);
+                    liveData.postValue(Resource.error(errorMessage, null));
                 }
             } catch (Exception e) {
                 liveData.postValue(Resource.error(e.getMessage(), null));
@@ -97,7 +100,8 @@ public class MovieRepository {
                 if (res.code() == 204) {
                     liveData.postValue(Resource.success(null));
                 } else {
-                    liveData.postValue(Resource.error(res.message(), null));
+                    String errorMessage = ErrorResponse.getErrorMessage(res);
+                    liveData.postValue(Resource.error(errorMessage, null));
                 }
             } catch (Exception e) {
                 liveData.postValue(Resource.error(e.getMessage(), null));
@@ -120,7 +124,8 @@ public class MovieRepository {
                     movieDao.insertAll(movies.toArray(new Movie[0]));
                     liveData.postValue(Resource.success(movies));
                 } else {
-                    liveData.postValue(Resource.error(res.message(), null));
+                    String errorMessage = ErrorResponse.getErrorMessage(res);
+                    liveData.postValue(Resource.error(errorMessage, null));
                 }
             } catch (Exception e) {
                 liveData.postValue(Resource.error(e.getMessage(), null));
@@ -143,7 +148,8 @@ public class MovieRepository {
                     movieDao.insertAll(movies.toArray(new Movie[0]));
                     liveData.postValue(Resource.success(movies));
                 } else {
-                    liveData.postValue(Resource.error(res.message(), null));
+                    String errorMessage = ErrorResponse.getErrorMessage(res);
+                    liveData.postValue(Resource.error(errorMessage, null));
                 }
             } catch (Exception e) {
                 liveData.postValue(Resource.error(e.getMessage(), null));
