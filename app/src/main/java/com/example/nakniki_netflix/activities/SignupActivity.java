@@ -83,21 +83,35 @@ public class SignupActivity extends AppCompatActivity {
             // Set the click listener for the avatar
             avatarCircle.setOnAvatarClickListener(v -> onAvatarSelected(avatarCircle, resId));
 
+            // Add margin (spacing) to each avatar
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            params.setMargins(0, 0, 20, 0); // Add 20px margin to the right
+            avatarCircle.setLayoutParams(params);
+
             // Add the avatar circle to the container
             avatarContainer.addView(avatarCircle);
         }
     }
 
     private void onAvatarSelected(AvatarCircle avatarCircle, int resId) {
-        // Highlight the selected avatar
+        // Base size for avatars
+        int baseSize = avatarCircle.dpToPx(40);  // 40dp (adjust as needed)
+        int selectedSize = avatarCircle.dpToPx(50); // Increased size for selected avatar
+
+        // Reset size of all avatars to base size
         for (int i = 0; i < avatarContainer.getChildCount(); i++) {
             AvatarCircle avatar = (AvatarCircle) avatarContainer.getChildAt(i);
-            avatar.setBackgroundColor(Color.TRANSPARENT); // Remove previous selection
+            avatar.setAvatarRadius(baseSize);  // Reset to base size
         }
 
-        avatarCircle.setBackgroundColor(Color.RED); // Highlight selected avatar
-        selectedAvatar = String.valueOf(resId); // Save the selected avatar resource ID
+        // Increase size of the selected avatar
+        avatarCircle.setAvatarRadius(selectedSize);
+
+        // Save the selected avatar resource ID
+        selectedAvatar = String.valueOf(resId);
     }
+
 
     private boolean validateFields() {
         String usernameText = username.getText().toString().trim();
