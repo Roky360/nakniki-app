@@ -25,6 +25,8 @@
     <string name="re_enter_password">Re-enter your password</string>
     <string name="login">Login</string>
     <string name="create">Create Account</string>
+    <string name="email_example">email@example.com</string>
+    <string name="logout">Logout</string>
 
     <string name="lorem_ipsum">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam in scelerisque sem. Mauris
