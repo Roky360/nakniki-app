@@ -50,7 +50,6 @@ public class LoginActivity extends AppCompatActivity {
                 if (username.isEmpty() || password.isEmpty()) {
                     alert.show("Please fill in all fields.", "error");
                 } else {
-                    // TODO handle the login logic
                     UserViewModel userViewModel = new ViewModelProvider(LoginActivity.this, new UserViewModelFactory(new UserRepository())).get(UserViewModel.class);
                     LiveData<Resource<Void>> live = userViewModel.login(username, password);
 
