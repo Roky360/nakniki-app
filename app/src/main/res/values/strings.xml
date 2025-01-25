@@ -29,4 +29,8 @@
     <string name="search_not_found">No movies found. Try searching for something else.</string>
     <string name="email_example">email@example.com</string>
     <string name="logout">Logout</string>
+    <string name="credit_card">For the low price of your Nakniki-credit card</string>
+    <string name="no_account">Or if you do not have an account</string>
+    <string name="home_unregistered">To watch billions of high quality Nakniki-Movies:</string>
+    <string name="welcome">Welcome to Nakniki-Netflix!</string>
 </resources>
