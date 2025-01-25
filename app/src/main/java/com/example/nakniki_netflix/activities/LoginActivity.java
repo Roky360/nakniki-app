@@ -9,11 +9,21 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.nakniki_netflix.R;
+import com.example.nakniki_netflix.api.Resource;
+import com.example.nakniki_netflix.repositories.UserRepository;
+import com.example.nakniki_netflix.view_models.UserViewModel;
+import com.example.nakniki_netflix.view_models.UserViewModelFactory;
+import com.example.nakniki_netflix.view_models.ViewModelUtils;
 import com.example.nakniki_netflix.widgets.Alert;
 
 public class LoginActivity extends AppCompatActivity {
+
+    private Alert alert = new Alert(this);
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,9 +36,9 @@ public class LoginActivity extends AppCompatActivity {
         Button loginButton = findViewById(R.id.login_button);
         TextView signupText = findViewById(R.id.signup_text);
         ImageView backButton = findViewById(R.id.back_button);
-        Alert alert = new Alert(this);
 
-        // Handle Login Button Click
+        // add listeners to the buttons
+        backButton.setOnClickListener(v -> onBackPressed());
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,34 +46,39 @@ public class LoginActivity extends AppCompatActivity {
                 String username = usernameEditText.getText().toString().trim();
                 String password = passwordEditText.getText().toString().trim();
 
-                // Simple validation check (you can add more advanced validation)
+                // Simple validation check
                 if (username.isEmpty() || password.isEmpty()) {
                     alert.show("Please fill in all fields.", "error");
                 } else {
-                    // TODO handle the login logic
-                    alert.show("name:" + username + " password:" + password + " login...", "success");
+                    UserViewModel userViewModel = new ViewModelProvider(LoginActivity.this, new UserViewModelFactory(new UserRepository())).get(UserViewModel.class);
+                    LiveData<Resource<Void>> live = userViewModel.login(username, password);
+
+                    ViewModelUtils.observeUntil(live, resource -> {
+                        if (resource.getStatus() == Resource.Status.SUCCESS) {
+                            // TODO redirect to home page
+                            showAlert("login in...", "success");
+                        } else if (resource.getStatus() == Resource.Status.ERROR) {
+                            showAlert(resource.getMessage(), "error");
+                        }
+                    }, resource -> resource.getStatus() == Resource.Status.SUCCESS);
                 }
             }
         });
 
-        // Handle Sign-Up Text Click (Navigates to SignUp Activity)
+        // if the user clicks on the signup text, open the signup activity
         signupText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Open the Sign-Up activity TODO remove this when the signup activity is implemented
-                // Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                //startActivity(intent);
-                alert.show("move to signup", "success");
-            }
-        });
-
-        // Handle Back Button Click
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Finish the current activity and go back to the previous screen
-                onBackPressed();
+                // Open the Sign-Up activity
+                Intent intent = new Intent(LoginActivity.this, SignupActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
+
+    private void showAlert(String message, String type) {
+        alert.show(message, type);
+    }
+
 }

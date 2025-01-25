@@ -27,4 +27,6 @@
     <string name="create">Create Account</string>
     <string name="search_movies">Search movies</string>
     <string name="search_not_found">No movies found. Try searching for something else.</string>
+    <string name="email_example">email@example.com</string>
+    <string name="logout">Logout</string>
 </resources>

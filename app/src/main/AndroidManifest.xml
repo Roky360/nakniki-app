@@ -27,6 +27,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.MovieInfoActivity" />
+        <activity android:name=".activities.SignupActivity"/>
         <activity android:name=".activities.LoginActivity"/>
         <activity android:name=".activities.SearchScreenActivity"/>
 

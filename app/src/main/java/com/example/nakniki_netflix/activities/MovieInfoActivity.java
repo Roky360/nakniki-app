@@ -7,9 +7,18 @@ import android.widget.TextView;
 import android.widget.Button;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.bumptech.glide.Glide;
 import com.example.nakniki_netflix.R;
+import com.example.nakniki_netflix.api.Resource;
+import com.example.nakniki_netflix.entities.Category;
 import com.example.nakniki_netflix.entities.Movie;
+import com.example.nakniki_netflix.repositories.CategoryRepository;
+import com.example.nakniki_netflix.view_models.CategoryViewModel;
+import com.example.nakniki_netflix.view_models.CategoryViewModelFactory;
+import com.example.nakniki_netflix.view_models.ViewModelUtils;
 import com.example.nakniki_netflix.widgets.CategoryBadge;
 
 import java.text.SimpleDateFormat;
@@ -78,20 +87,27 @@ public class MovieInfoActivity extends AppCompatActivity {
         // Add categories dynamically
         if (movie.getCategories() != null) {
             for (String category : movie.getCategories()) {
-                // Create a badge
+                CategoryViewModel categoryViewModel = new ViewModelProvider(this, new CategoryViewModelFactory(new CategoryRepository())).get(CategoryViewModel.class);
+                LiveData<Resource<Category>> live = categoryViewModel.getCategoryById(category);
+
+                // create the category badge
                 CategoryBadge badge = new CategoryBadge(this);
-                badge.setCategoryName(category);
+                ViewModelUtils.observeUntil(live, resource -> {
+                    if (resource.getStatus() == Resource.Status.SUCCESS) {
+                        badge.setCategoryName(resource.getData().getName());
 
-                // Set margins
-                LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
-                        LinearLayout.LayoutParams.WRAP_CONTENT,
-                        LinearLayout.LayoutParams.WRAP_CONTENT
-                );
-                layoutParams.setMargins(8, 0, 8, 0); // Left, Top, Right, Bottom margins
-                badge.setLayoutParams(layoutParams);
+                        // Set margins
+                        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(
+                                LinearLayout.LayoutParams.WRAP_CONTENT,
+                                LinearLayout.LayoutParams.WRAP_CONTENT
+                        );
+                        layoutParams.setMargins(8, 0, 8, 0);
+                        badge.setLayoutParams(layoutParams);
 
-                // Add badge to the container
-                categoriesContainer.addView(badge);
+                        // Add badge to the container
+                        categoriesContainer.addView(badge);
+                    }
+                }, resource -> resource.getStatus() == Resource.Status.SUCCESS || resource.getStatus() == Resource.Status.ERROR);
             }
         } else {
             // Handle missing categories
