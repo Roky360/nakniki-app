@@ -18,7 +18,7 @@
         android:theme="@style/Base.Theme.NaknikiNetflix"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".activities.UnregisteredHomeActivity"
             android:exported="true"
             android:theme="@style/Base.Theme.NaknikiNetflix">
             <intent-filter>
