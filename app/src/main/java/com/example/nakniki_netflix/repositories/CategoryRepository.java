@@ -43,6 +43,26 @@ public class CategoryRepository {
     }
 
     public LiveData<Resource<Category>> getCategoryById(String id) {
+        MutableLiveData<Resource<Category>> liveData = new MutableLiveData<>();
+        liveData.setValue(Resource.loading(null));
+
+        executor.execute(() -> {
+            try {
+                Response<Category> res = categoryAPI.getCategory(tokenStorage.getToken(), id).execute();
+                Category category = res.body();
+
+                if (res.code() == 200 && category != null) {
+                    // sync api data to db
+                    categoryDao.insert(category);
+                    liveData.postValue(Resource.success(category));
+                } else {
+                    liveData.postValue(Resource.success(categoryDao.get(id).getValue()));
+                }
+            } catch (Exception e) { // on error, return stored category
+                liveData.postValue(Resource.success(categoryDao.get(id).getValue()));
+            }
+        });
+
         return new MutableLiveData<>(Resource.success(categoryDao.get(id).getValue()));
     }
 

@@ -11,16 +11,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.nakniki_netflix.R;
 import com.example.nakniki_netflix.adapters.MovieCardAdapter;
-import com.example.nakniki_netflix.entities.Category;
 import com.example.nakniki_netflix.entities.CategoryWithMovies;
-import com.example.nakniki_netflix.view_models.MovieViewModel;
 
 public class CategoryRow extends LinearLayout {
     // The text above the movie cards, the category name
     private TextView categoryName;
     // The RecyclerView that holds the movie cards
     private RecyclerView moviesRecyclerView;
-    private MovieViewModel movieViewModel;
 
     /**
      * Constructor, a category which contains movies which belong to it

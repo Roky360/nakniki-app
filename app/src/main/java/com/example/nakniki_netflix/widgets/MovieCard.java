@@ -58,10 +58,6 @@ public class MovieCard extends RecyclerView.ViewHolder {
 
         // when the user press the movie card
         itemView.setOnClickListener(v -> {
-            // TODO redirect to the movie details page
-            Alert alert = new Alert(activity);
-            alert.show("You clicked on " + this.movieName.getText(), "success");
-
             Intent intent = new Intent(activity, MovieInfoActivity.class);
             intent.putExtra("movie", movie); // Pass the movie object
             activity.startActivity(intent);

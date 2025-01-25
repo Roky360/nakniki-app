@@ -1,8 +1,10 @@
 package com.example.nakniki_netflix;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.nakniki_netflix.activities.SearchScreenActivity;
 import com.example.nakniki_netflix.api.Resource;
 import com.example.nakniki_netflix.entities.Movie;
 import com.example.nakniki_netflix.repositories.MovieRepository;
@@ -62,6 +64,11 @@ public class MainActivity extends AppCompatActivity {
                         .commit();
             }
             return true;
+        });
+
+        binding.fab.setOnClickListener(v -> {
+            Intent intent = new Intent(this, SearchScreenActivity.class);
+            startActivity(intent);
         });
 
 //        binding.fab.setOnClickListener(new View.OnClickListener() {
