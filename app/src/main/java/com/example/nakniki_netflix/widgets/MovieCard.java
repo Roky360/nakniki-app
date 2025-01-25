@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.nakniki_netflix.MyApplication;
 import com.example.nakniki_netflix.R;
 import com.example.nakniki_netflix.entities.Movie;
 import com.example.nakniki_netflix.activities.MovieInfoActivity;
@@ -48,7 +49,7 @@ public class MovieCard extends RecyclerView.ViewHolder {
         // Load the movie thumbnail using Glide
         if (movie.getThumbnail() != null && !movie.getThumbnail().isEmpty()) {
             Glide.with(thumbnail.getContext())
-                    .load(movie.getThumbnail())
+                    .load(MyApplication.getAppContext().getResources().getString(R.string.api_base_url) + movie.getThumbnail().replace("/api/", ""))
                     .placeholder(R.drawable.default_avatar)
                     .error(R.drawable.default_avatar)
                     .into(thumbnail);
