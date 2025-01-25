@@ -14,7 +14,7 @@ public class Category {
     @SerializedName("_id")
     private final String id;
     private String name;
-    private boolean promoted;
+    private Boolean promoted;
 
     // Constructor
     public Category(@NonNull String id,String name, boolean promoted) {
@@ -37,11 +37,11 @@ public class Category {
         this.name = name;
     }
 
-    public boolean isPromoted() {
+    public Boolean isPromoted() {
         return promoted;
     }
 
-    public void setPromoted(boolean promoted) {
+    public void setPromoted(Boolean promoted) {
         this.promoted = promoted;
     }
 

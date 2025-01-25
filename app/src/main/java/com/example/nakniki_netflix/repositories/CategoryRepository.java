@@ -63,7 +63,7 @@ public class CategoryRepository {
             }
         });
 
-        return new MutableLiveData<>(Resource.success(categoryDao.get(id).getValue()));
+        return liveData;
     }
 
     public void insertCategory(Category category) {

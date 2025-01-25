@@ -69,7 +69,7 @@ public class MovieInfoActivity extends AppCompatActivity {
         // Load movie thumbnail
         if (movie.getThumbnail() != null && !movie.getThumbnail().isEmpty()) {
             Glide.with(this)
-                    .load(movie.getThumbnail())
+                    .load(getResources().getString(R.string.api_base_url) + movie.getThumbnail().replace("/api/", ""))
                     .placeholder(R.drawable.default_avatar)
                     .error(R.drawable.default_avatar)
                     .into(movieThumbnail);
