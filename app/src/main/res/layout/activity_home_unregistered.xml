@@ -24,7 +24,7 @@
         android:layout_width="200dp"
         android:layout_height="200dp"
         android:src="@drawable/nakniki_logo"
-        android:layout_marginBottom="24dp" />
+        android:layout_marginBottom="32dp" />
 
     <!-- Instruction Text -->
     <TextView
