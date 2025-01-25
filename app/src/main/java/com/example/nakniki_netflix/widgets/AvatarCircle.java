@@ -21,6 +21,11 @@ public class AvatarCircle extends FrameLayout {
         initialize(context);
     }
 
+    public AvatarCircle(Context context) {
+        super(context);
+        initialize(context);
+    }
+
     private void initialize(Context context) {
         // Inflate the layout for the AvatarCircle
         LayoutInflater.from(context).inflate(R.layout.avatar_circle, this, true);
