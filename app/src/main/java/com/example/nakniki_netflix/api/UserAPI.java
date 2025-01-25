@@ -1,6 +1,7 @@
 package com.example.nakniki_netflix.api;
 
 import com.example.nakniki_netflix.entities.LoginResult;
+import com.example.nakniki_netflix.entities.SignupForm;
 import com.example.nakniki_netflix.entities.UnregisteredUser;
 import com.example.nakniki_netflix.entities.User;
 
@@ -18,5 +19,5 @@ public interface UserAPI {
     Call<User> getUser(@Path("id") String id);
 
     @POST("users")
-    Call<Void> createUser(@Body User user);
+    Call<Void> createUser(@Body SignupForm user);
 }
