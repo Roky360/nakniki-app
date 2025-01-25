@@ -1,16 +1,12 @@
 package com.example.nakniki_netflix.activities;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
@@ -18,7 +14,6 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.nakniki_netflix.R;
 import com.example.nakniki_netflix.api.Resource;
-import com.example.nakniki_netflix.entities.User;
 import com.example.nakniki_netflix.repositories.UserRepository;
 import com.example.nakniki_netflix.view_models.UserViewModel;
 import com.example.nakniki_netflix.view_models.UserViewModelFactory;
@@ -148,7 +143,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void createAccount() {
-        // You can add logic here to handle user registration (e.g., saving to a database)
+        // Get the fields
         String usernameText = username.getText().toString().trim();
         String emailText = email.getText().toString().trim();
         String passwordText = password.getText().toString().trim();
@@ -159,7 +154,7 @@ public class SignupActivity extends AppCompatActivity {
 
         ViewModelUtils.observeUntil(live, resource -> {
             if (resource.getStatus() == Resource.Status.SUCCESS) {
-                // todo navigate to login
+                navigateToLogin();
                 showAlert("created", "success");
             } else if (resource.getStatus() == Resource.Status.ERROR) {
                 showAlert(resource.getMessage(), "error");
@@ -171,6 +166,7 @@ public class SignupActivity extends AppCompatActivity {
         // Navigate to login activity
         Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
         startActivity(intent);
+        finish();
     }
 
     private void showAlert(String message, String type) {
