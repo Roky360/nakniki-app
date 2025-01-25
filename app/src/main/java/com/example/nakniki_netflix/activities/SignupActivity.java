@@ -13,8 +13,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.nakniki_netflix.R;
+import com.example.nakniki_netflix.api.Resource;
+import com.example.nakniki_netflix.entities.User;
+import com.example.nakniki_netflix.repositories.UserRepository;
+import com.example.nakniki_netflix.view_models.UserViewModel;
+import com.example.nakniki_netflix.view_models.UserViewModelFactory;
+import com.example.nakniki_netflix.view_models.ViewModelUtils;
 import com.example.nakniki_netflix.widgets.Alert;
 import com.example.nakniki_netflix.widgets.AvatarCircle;
 
@@ -109,9 +117,8 @@ public class SignupActivity extends AppCompatActivity {
         avatarCircle.setAvatarRadius(selectedSize);
 
         // Save the selected avatar resource ID
-        selectedAvatar = String.valueOf(resId);
+        selectedAvatar = getResources().getResourceEntryName(resId);
     }
-
 
     private boolean validateFields() {
         String usernameText = username.getText().toString().trim();
@@ -146,22 +153,24 @@ public class SignupActivity extends AppCompatActivity {
         String emailText = email.getText().toString().trim();
         String passwordText = password.getText().toString().trim();
 
-        // For now, show a success message and navigate to the next screen
-        showAlert("Account created successfully for " + usernameText, "success");
+        // create the user
+        UserViewModel userViewModel = new ViewModelProvider(this, new UserViewModelFactory(new UserRepository())).get(UserViewModel.class);
+        LiveData<Resource<Void>> live = userViewModel.register(usernameText, passwordText, emailText, "/avatars/" + selectedAvatar + ".png");
 
-        // TODO add logic of create account
-
-        // Redirect to the login screen or main screen TODO redirect to home
-//        Intent intent = new Intent(SignupActivity.this, MainActivity.class);
-//        startActivity(intent);
-//        finish(); // Close the signup activity
+        ViewModelUtils.observeUntil(live, resource -> {
+            if (resource.getStatus() == Resource.Status.SUCCESS) {
+                // todo navigate to login
+                showAlert("created", "success");
+            } else if (resource.getStatus() == Resource.Status.ERROR) {
+                showAlert(resource.getMessage(), "error");
+            }
+        }, resource -> resource.getStatus() == Resource.Status.SUCCESS);
     }
 
     private void navigateToLogin() {
-        // Navigate to login activity TODO redirect to login activity
-//        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
-//        startActivity(intent);
-        showAlert("Navigate to Login", "success");
+        // Navigate to login activity
+        Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
+        startActivity(intent);
     }
 
     private void showAlert(String message, String type) {

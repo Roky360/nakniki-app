@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.nakniki_netflix.MainActivity;
+import com.example.nakniki_netflix.MyApplication;
 import com.example.nakniki_netflix.api.MovieAPI;
 import com.example.nakniki_netflix.api.Resource;
 import com.example.nakniki_netflix.api.RetrofitClient;
@@ -26,7 +27,7 @@ public class MovieRepository {
     private final TokenStorage tokenStorage;
 
     public MovieRepository() {
-        MovieDao movieDao = AppDB.getInstance(MainActivity.getAppContext()).movieDao();
+        MovieDao movieDao = AppDB.getInstance(MyApplication.getAppContext()).movieDao();
         MovieAPI movieAPI = RetrofitClient.getInstance().create(MovieAPI.class);
         this.movieDao = movieDao;
         this.movieAPI = movieAPI;

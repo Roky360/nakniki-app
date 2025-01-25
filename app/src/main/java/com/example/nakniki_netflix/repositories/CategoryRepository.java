@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.nakniki_netflix.MainActivity;
+import com.example.nakniki_netflix.MyApplication;
 import com.example.nakniki_netflix.api.CategoryAPI;
 import com.example.nakniki_netflix.api.Resource;
 import com.example.nakniki_netflix.api.RetrofitClient;
@@ -25,7 +26,7 @@ public class CategoryRepository {
     private final TokenStorage tokenStorage;
 
     public CategoryRepository() {
-        CategoryDao categoryDao = AppDB.getInstance(MainActivity.getAppContext()).categoryDao();
+        CategoryDao categoryDao = AppDB.getInstance(MyApplication.getAppContext()).categoryDao();
         CategoryAPI categoryAPI = RetrofitClient.getInstance().create(CategoryAPI.class);
         this.categoryDao = categoryDao;
         this.categoryAPI = categoryAPI;

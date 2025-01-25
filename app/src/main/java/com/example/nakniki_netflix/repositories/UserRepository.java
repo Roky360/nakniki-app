@@ -1,10 +1,14 @@
 package com.example.nakniki_netflix.repositories;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.nakniki_netflix.MainActivity;
+import com.example.nakniki_netflix.MyApplication;
 import com.example.nakniki_netflix.api.CategoryAPI;
+import com.example.nakniki_netflix.api.ErrorResponse;
 import com.example.nakniki_netflix.api.Resource;
 import com.example.nakniki_netflix.api.RetrofitClient;
 import com.example.nakniki_netflix.api.UserAPI;
@@ -32,7 +36,7 @@ public class UserRepository {
     public String userId = null; // represents the user id if registered (null if not)
 
     public UserRepository() {
-        UserDao categoryDao = AppDB.getInstance(MainActivity.getAppContext()).userDao();
+        UserDao categoryDao = AppDB.getInstance(MyApplication.getAppContext()).userDao();
         UserAPI categoryAPI = RetrofitClient.getInstance().create(UserAPI.class);
         this.userDao = categoryDao;
         this.userAPI = categoryAPI;
@@ -100,19 +104,22 @@ public class UserRepository {
         return liveData;
     }
 
-    public LiveData<Resource<User>> createUser(String username, String password, String email, String profilePic) {
-        MutableLiveData<Resource<User>> liveData = new MutableLiveData<>();
+    public LiveData<Resource<Void>> createUser(String username, String password, String email, String profilePic) {
+        MutableLiveData<Resource<Void>> liveData = new MutableLiveData<>();
         liveData.setValue(Resource.loading(null));
 
         executor.execute(() -> {
             try {
                 SignupForm signupForm = new SignupForm(username, password, email, profilePic);
+                Log.i("TAG","createUser: " + signupForm.getUsername() + " " + signupForm.getPassword() + " " + signupForm.getEmail() + " " + signupForm.getProfile_pic());
                 Response<Void> res = userAPI.createUser(signupForm).execute();
+
 
                 if (res.code() == 201) {
                     liveData.postValue(Resource.success(null));
                 } else {
-                    liveData.postValue(Resource.error(res.message(), null));
+                    String errorMessage = ErrorResponse.getErrorMessage(res);  // Get error message from response
+                    liveData.postValue(Resource.error(errorMessage, null));
                 }
             } catch (Exception e) {
                 liveData.postValue(Resource.error(e.getMessage(), null));

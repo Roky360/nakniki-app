@@ -23,7 +23,7 @@ public class UserViewModel extends ViewModel {
         return user;
     }
 
-    public LiveData<Resource<User>> register(String username, String password, String email, String profilePic) {
+    public LiveData<Resource<Void>> register(String username, String password, String email, String profilePic) {
         return repository.createUser(username, password, email, profilePic);
     }
 
