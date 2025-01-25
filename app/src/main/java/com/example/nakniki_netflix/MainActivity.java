@@ -176,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-    public static Context getAppContext() {
-        return instance.getApplicationContext();
-    }
+//    public static Context getAppContext() {
+//        return instance.getApplicationContext();
+//    }
 }

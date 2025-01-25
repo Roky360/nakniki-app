@@ -6,6 +6,7 @@ import androidx.security.crypto.EncryptedSharedPreferences;
 import androidx.security.crypto.MasterKeys;
 
 import com.example.nakniki_netflix.MainActivity;
+import com.example.nakniki_netflix.MyApplication;
 
 public class TokenStorage {
     private static final String PREF_NAME = "auth_prefs";
@@ -19,7 +20,7 @@ public class TokenStorage {
             sharedPreferences = EncryptedSharedPreferences.create(
                     PREF_NAME,
                     masterKeyAlias,
-                    MainActivity.getAppContext(),
+                    MyApplication.getAppContext(),
                     EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
                     EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
             );
