@@ -13,6 +13,7 @@ import com.example.nakniki_netflix.db.CategoryDao;
 import com.example.nakniki_netflix.db.TokenStorage;
 import com.example.nakniki_netflix.db.UserDao;
 import com.example.nakniki_netflix.entities.LoginResult;
+import com.example.nakniki_netflix.entities.SignupForm;
 import com.example.nakniki_netflix.entities.UnregisteredUser;
 import com.example.nakniki_netflix.entities.User;
 
@@ -99,14 +100,14 @@ public class UserRepository {
         return liveData;
     }
 
-    public LiveData<Resource<User>> createUser(String username, String email, String profilePic) {
+    public LiveData<Resource<User>> createUser(String username, String password, String email, String profilePic) {
         MutableLiveData<Resource<User>> liveData = new MutableLiveData<>();
         liveData.setValue(Resource.loading(null));
 
         executor.execute(() -> {
             try {
-                User user = new User("", username, email, profilePic);
-                Response<Void> res = userAPI.createUser(user).execute();
+                SignupForm signupForm = new SignupForm(username, password, email, profilePic);
+                Response<Void> res = userAPI.createUser(signupForm).execute();
 
                 if (res.code() == 201) {
                     liveData.postValue(Resource.success(null));
