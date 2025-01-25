@@ -14,6 +14,7 @@ import com.example.nakniki_netflix.view_models.ViewModelUtils;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -21,33 +22,47 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.nakniki_netflix.databinding.ActivityMainBinding;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     private static MainActivity instance;
-
     private AppBarConfiguration appBarConfiguration;
-    private ActivityMainBinding binding;
-
-    private UserViewModel userViewModel;
-    private CategoryViewModel categoryViewModel;
-    private MovieViewModel movieViewModel;
-    int i = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         instance = this;
 
-        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        ActivityMainBinding binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        setSupportActionBar(binding.toolbar);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container, new HomeTestFragment())
+                .commit();
 
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-        appBarConfiguration = new AppBarConfiguration.Builder(navController.getGraph()).build();
-        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
+        BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
+
+        bottomNav.setOnNavigationItemSelectedListener(item -> {
+            Fragment selectedFragment = null;
+            int itemId = item.getItemId();
+
+            if (itemId == R.id.nav_home_page) {
+                selectedFragment = new HomeTestFragment();
+            } else if (itemId == R.id.nav_movies_page) {
+                selectedFragment = new MoviesTestFragment();
+            } else if (itemId == R.id.nav_profile_page) {
+                selectedFragment = new ProfileTestFragment();
+            }
+
+            if (selectedFragment != null) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_container, selectedFragment)
+                        .commit();
+            }
+            return true;
+        });
 
 //        binding.fab.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -96,7 +111,7 @@ public class MainActivity extends AppCompatActivity {
 //        });
 
         // movies view model test
-        movieViewModel = new ViewModelProvider(this, new MovieViewModelFactory(new MovieRepository())).get(MovieViewModel.class);
+//        movieViewModel = new ViewModelProvider(this, new MovieViewModelFactory(new MovieRepository())).get(MovieViewModel.class);
 
 
 //        movieViewModel.getMoviesByCategories().observe(this, catWithMovies -> {
@@ -133,25 +148,25 @@ public class MainActivity extends AppCompatActivity {
 //            }
 //        });
 
-        binding.fab.setOnClickListener(view -> {
-            ViewModelUtils.observeUntil(movieViewModel.searchMovies(binding.editText.getText().toString()),
-                    resource -> {
-                        if (resource.getStatus() == Resource.Status.SUCCESS) {
-                            List<Movie> res = resource.getData();
-                            StringBuilder movies = new StringBuilder();
-                            for (Movie m : res) {
-                                movies.append(m.getName()).append("\n");
-                            }
-
-                            binding.catList.setText(movies.toString());
-                        } else {
-                            binding.catList.setText(resource.getMessage());
-                        }
-
-                    },
-                    resource -> resource.getStatus() == Resource.Status.SUCCESS
-            );
-        });
+//        binding.fab.setOnClickListener(view -> {
+//            ViewModelUtils.observeUntil(movieViewModel.searchMovies(binding.editText.getText().toString()),
+//                    resource -> {
+//                        if (resource.getStatus() == Resource.Status.SUCCESS) {
+//                            List<Movie> res = resource.getData();
+//                            StringBuilder movies = new StringBuilder();
+//                            for (Movie m : res) {
+//                                movies.append(m.getName()).append("\n");
+//                            }
+//
+//                            binding.catList.setText(movies.toString());
+//                        } else {
+//                            binding.catList.setText(resource.getMessage());
+//                        }
+//
+//                    },
+//                    resource -> resource.getStatus() == Resource.Status.SUCCESS
+//            );
+//        });
     }
 
     @Override
