@@ -26,13 +26,11 @@ public class UnregisteredHomeActivity extends AppCompatActivity {
         // Navigate to login activity
         Intent intent = new Intent(UnregisteredHomeActivity.this, LoginActivity.class);
         startActivity(intent);
-        finish();
     }
     // Navigates to signup screen
     private void navigateToSignup() {
         // Navigate to login activity
         Intent intent = new Intent(UnregisteredHomeActivity.this, SignupActivity.class);
         startActivity(intent);
-        finish();
     }
 }
