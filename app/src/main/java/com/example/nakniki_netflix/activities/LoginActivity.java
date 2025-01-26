@@ -24,7 +24,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private Alert alert = new Alert(this);
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +54,11 @@ public class LoginActivity extends AppCompatActivity {
 
                     ViewModelUtils.observeUntil(live, resource -> {
                         if (resource.getStatus() == Resource.Status.SUCCESS) {
-                            // TODO redirect to home page
+                            // return back with a ok result and finish the activity
+                            Intent resultIntent = new Intent();
+                            resultIntent.putExtra("resultKey", true);
+                            setResult(RESULT_OK, resultIntent);
+                            finish();
                             showAlert("login in...", "success");
                         } else if (resource.getStatus() == Resource.Status.ERROR) {
                             showAlert(resource.getMessage(), "error");
