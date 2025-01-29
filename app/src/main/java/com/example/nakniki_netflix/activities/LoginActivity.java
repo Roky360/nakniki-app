@@ -55,11 +55,10 @@ public class LoginActivity extends AppCompatActivity {
                     ViewModelUtils.observeUntil(live, resource -> {
                         if (resource.getStatus() == Resource.Status.SUCCESS) {
                             // return back with a ok result and finish the activity
-                            Intent resultIntent = new Intent();
+                            Intent resultIntent = new Intent(LoginActivity.this, RegisteredHomeActivity.class);
                             resultIntent.putExtra("resultKey", true);
-                            setResult(RESULT_OK, resultIntent);
+                            startActivity(resultIntent);
                             finish();
-                            showAlert("login in...", "success");
                         } else if (resource.getStatus() == Resource.Status.ERROR) {
                             showAlert(resource.getMessage(), "error");
                         }
