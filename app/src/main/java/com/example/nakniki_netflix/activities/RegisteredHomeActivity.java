@@ -1,7 +1,7 @@
 package com.example.nakniki_netflix.activities;
 
-import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.LinearLayout;
 import android.widget.VideoView;
 
@@ -91,17 +91,21 @@ public class RegisteredHomeActivity extends AppCompatActivity {
             alert.show("No movies available to play in the autoplayer.", "error");
             return;
         }
+        // Picks a random movie
         Random random = new Random();
         Movie randomMovie = movies.get(random.nextInt(movies.size()));
 
-        String videoUrl = randomMovie.getThumbnail();
-        Uri videoUri = Uri.parse(videoUrl);
-        videoView.setVideoURI(videoUri);
+        // Gets the video url using the movie's id, and pastes it to the video player
+        String videoUrl = getResources().getString(R.string.api_movies_base_url) + randomMovie.getId() + ".mp4";
+        Log.d("VIDEO_PLAYER", "Playing Video URL: " + videoUrl);
+        // Sets the video path to the provided movie
+        videoView.setVideoPath(videoUrl);
 
+        //Presets video autoplayer settings
         videoView.setOnPreparedListener(mp -> {
-            mp.setVolume(0f, 0f); // mute
-            mp.setLooping(true);  // loop video
-            videoView.start();    // autoplay
+            mp.setVolume(0f, 0f); // Mute video
+            mp.setLooping(true);  // Loop playback
+            videoView.start();    // Autoplay
         });
     }
 }
