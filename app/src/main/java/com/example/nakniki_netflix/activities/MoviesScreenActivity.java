@@ -65,15 +65,9 @@ public class MoviesScreenActivity extends AppCompatActivity {
                         }
                     }
                 }
-
-                // Check if movies exist
-                if (uniqueMovies.isEmpty()) {
-                    Toast.makeText(this, "No movies available.", Toast.LENGTH_SHORT).show();
-                } else {
-                    // Set adapter for unique movies
-                    moviesRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-                    moviesRecyclerView.setAdapter(new MovieCardAdapter(this, uniqueMovies));
-                }
+                // Set adapter for unique movies
+                moviesRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+                moviesRecyclerView.setAdapter(new MovieCardAdapter(this, uniqueMovies));
 
             } else if (resource.getStatus() == Resource.Status.ERROR) {
                 Log.e(TAG, "Error fetching movies: " + resource.getMessage());
