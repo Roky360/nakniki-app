@@ -6,10 +6,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import com.example.nakniki_netflix.R;
-import com.example.nakniki_netflix.adapters.MovieCardAdapter;
 import com.example.nakniki_netflix.api.Resource;
 import com.example.nakniki_netflix.entities.CategoryWithMovies;
 import com.example.nakniki_netflix.entities.Movie;
@@ -26,7 +23,6 @@ import java.util.Set;
 public class MoviesScreenActivity extends AppCompatActivity {
 
     private MovieGrid movieGrid;
-    private MovieCardAdapter movieAdapter;
     private MovieViewModel movieViewModel;
     private List<Movie> uniqueMovies = new ArrayList<>();
     private static final String TAG = "MOVIES_SCREEN";
