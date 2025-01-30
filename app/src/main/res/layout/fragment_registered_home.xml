@@ -17,7 +17,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="250dp"
         android:fillViewport="true"
-        android:background="@android:color/transparent">
+        android:background="@android:color/transparent"
+        android:paddingBottom="80dp">
 
         <LinearLayout
             android:id="@+id/categories_row"
