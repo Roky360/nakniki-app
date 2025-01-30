@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- Video Player (Autoplays at the top of the screen) -->
+    <VideoView
+        android:id="@+id/video_player"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@android:color/transparent"/>
+
+    <!-- Allows to scroll down the multiple recyclerViews -->
+    <ScrollView
+        android:id="@+id/scroller"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="250dp"
+        android:background="@android:color/transparent"
+        android:fillViewport="true">
+
+        <!-- Will display all of the promoted and watched categories -->
+        <LinearLayout
+            android:id="@+id/categories_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+    </LinearLayout></ScrollView>
+    <!-- Category rows will be inserted here -->
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

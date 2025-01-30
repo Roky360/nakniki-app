@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.example.nakniki_netflix.activities.SearchScreenActivity;
 import com.example.nakniki_netflix.api.Resource;
 import com.example.nakniki_netflix.entities.Movie;
+import com.example.nakniki_netflix.fragments.RegisteredHomeFragment;
 import com.example.nakniki_netflix.repositories.MovieRepository;
 import com.example.nakniki_netflix.view_models.CategoryViewModel;
 import com.example.nakniki_netflix.view_models.MovieViewModel;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new HomeTestFragment())
+                .replace(R.id.fragment_container, new RegisteredHomeFragment())
                 .commit();
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
@@ -51,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
             int itemId = item.getItemId();
 
             if (itemId == R.id.nav_home_page) {
-                selectedFragment = new HomeTestFragment();
+                selectedFragment = new RegisteredHomeFragment();
             } else if (itemId == R.id.nav_movies_page) {
                 selectedFragment = new MoviesTestFragment();
             } else if (itemId == R.id.nav_profile_page) {
