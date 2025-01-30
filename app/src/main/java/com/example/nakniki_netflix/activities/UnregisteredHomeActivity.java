@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.nakniki_netflix.MainActivity;
 import com.example.nakniki_netflix.R;
 
 public class UnregisteredHomeActivity extends AppCompatActivity {
@@ -42,7 +44,7 @@ public class UnregisteredHomeActivity extends AppCompatActivity {
             boolean isLoggedIn = data.getBooleanExtra("resultKey", false);
             if (isLoggedIn) {
                 // Navigate to RegisteredHomeActivity and close UnregisteredHomeActivity
-                Intent intent = new Intent(UnregisteredHomeActivity.this, RegisteredHomeActivity.class);
+                Intent intent = new Intent(UnregisteredHomeActivity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
