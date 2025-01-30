@@ -59,7 +59,6 @@ public class LoginActivity extends AppCompatActivity {
                             resultIntent.putExtra("resultKey", true);
                             setResult(RESULT_OK, resultIntent);
                             finish();
-                            showAlert("login in...", "success");
                         } else if (resource.getStatus() == Resource.Status.ERROR) {
                             showAlert(resource.getMessage(), "error");
                         }
