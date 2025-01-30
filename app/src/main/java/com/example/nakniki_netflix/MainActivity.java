@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.fragment_container, new HomeTestFragment())
+                .replace(R.id.fragment_container, new RegisteredHomeFragment())
                 .commit();
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_nav);
