@@ -16,6 +16,8 @@ import com.example.nakniki_netflix.R;
 public class WatchMovieActivity extends AppCompatActivity {
 
     private VideoView videoView;
+    private ImageView playPauseButton;
+    private boolean isPaused = false;
     private static final String TAG = "MOVIE_PLAYER";
 
     @Override
@@ -29,7 +31,7 @@ public class WatchMovieActivity extends AppCompatActivity {
         setContentView(R.layout.activity_watch_movie);
 
         // Get the Movie ID from Intent
-        String movieId = getIntent().getStringExtra("movie_id");
+        String movieId = getIntent().getStringExtra("movieId");
         if (movieId == null) {
             Log.e(TAG, "No movie ID received.");
             finish();
@@ -37,9 +39,6 @@ public class WatchMovieActivity extends AppCompatActivity {
         }
 
         videoView = findViewById(R.id.video_player);
-        ImageView exitButton = findViewById(R.id.exit_button);
-        // Set exit button to go to the previous screen once clicked
-        exitButton.setOnClickListener(v -> finish());
 
         // Construct the movie URL
         String videoUrl = getResources().getString(R.string.api_movies_base_url) + movieId + ".mp4";
@@ -51,12 +50,36 @@ public class WatchMovieActivity extends AppCompatActivity {
         videoView.setOnPreparedListener(mp -> {
             mp.setVolume(1.0f, 1.0f); // Set volume (change if needed)
             videoView.start();    // Autoplay the video
+
+            // Auto-close when the video is over
+            mp.setOnCompletionListener(mediaPlayer -> finish());
         });
+
+        ImageView exitButton = findViewById(R.id.exit_button);
+        exitButton.setOnClickListener(v -> finish());
+        playPauseButton = findViewById(R.id.play_pause_button);
+        playPauseButton.setOnClickListener(v -> togglePlayPause());
 
         // Handle errors
         videoView.setOnErrorListener((mp, what, extra) -> {
             Log.e(TAG, "Error playing video: " + what + ", " + extra);
             return true;
         });
+
+    }
+
+    /**
+     * Toggles between play and pause
+     */
+    private void togglePlayPause() {
+        if (videoView.isPlaying()) {
+            videoView.pause();
+            playPauseButton.setImageResource(R.drawable.ic_play);
+            isPaused = true;
+        } else {
+            videoView.start();
+            playPauseButton.setImageResource(R.drawable.ic_pause);
+            isPaused = false;
+        }
     }
 }
