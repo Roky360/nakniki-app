@@ -16,6 +16,8 @@ import com.example.nakniki_netflix.entities.Movie;
 import com.example.nakniki_netflix.repositories.MovieRepository;
 import com.example.nakniki_netflix.view_models.MovieViewModel;
 import com.example.nakniki_netflix.view_models.MovieViewModelFactory;
+import com.example.nakniki_netflix.widgets.MovieGrid;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -23,7 +25,7 @@ import java.util.Set;
 
 public class MoviesScreenActivity extends AppCompatActivity {
 
-    private RecyclerView moviesRecyclerView;
+    private MovieGrid movieGrid;
     private MovieCardAdapter movieAdapter;
     private MovieViewModel movieViewModel;
     private List<Movie> uniqueMovies = new ArrayList<>();
@@ -35,8 +37,7 @@ public class MoviesScreenActivity extends AppCompatActivity {
         setContentView(R.layout.activity_movies_screen);
 
         // Initialize RecyclerView, setting it to have two movies per row
-        moviesRecyclerView = findViewById(R.id.movies_recycler_view);
-        moviesRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+        movieGrid = findViewById(R.id.movies_grid);
 
         // Initialize ViewModel
         movieViewModel = new ViewModelProvider(this, new MovieViewModelFactory(new MovieRepository()))
@@ -66,8 +67,7 @@ public class MoviesScreenActivity extends AppCompatActivity {
                     }
                 }
                 // Set adapter for unique movies
-                moviesRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
-                moviesRecyclerView.setAdapter(new MovieCardAdapter(this, uniqueMovies));
+                movieGrid.setMovies(uniqueMovies);
 
             } else if (resource.getStatus() == Resource.Status.ERROR) {
                 Log.e(TAG, "Error fetching movies: " + resource.getMessage());
