@@ -40,7 +40,6 @@ public class RegisteredHomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        // Inflate fragment layout
         View view = inflater.inflate(R.layout.fragment_registered_home, container, false);
 
         // Initialize UI elements
@@ -51,12 +50,10 @@ public class RegisteredHomeFragment extends Fragment {
         // Initialize ViewModel
         movieViewModel = new ViewModelProvider(this, new MovieViewModelFactory(new MovieRepository()))
                 .get(MovieViewModel.class);
-
-        // Fetch categories and dynamically add them to UI
         fetchCategories();
-
         return view;
     }
+
 
     private void fetchCategories() {
         LiveData<Resource<List<CategoryWithMovies>>> liveData = movieViewModel.getMoviesByCategories();
@@ -70,6 +67,7 @@ public class RegisteredHomeFragment extends Fragment {
                     movies.addAll(category.getMovies());
                     addCategoryRow(category);
                 }
+
                 playRandomMovie();
             } else if (resource.getStatus() == Resource.Status.ERROR) {
                 alert.show(resource.getMessage(), "error");
@@ -83,23 +81,29 @@ public class RegisteredHomeFragment extends Fragment {
         categoriesRow.addView(categoryRow);
     }
 
+    /**
+     * Chooses a random movie from the gathered list of movies and plays one
+     */
     private void playRandomMovie() {
         if (movies.isEmpty()) {
             alert.show("No movies available to play in the autoplayer.", "error");
             return;
         }
-
+        // Picks a random movie
         Random random = new Random();
         Movie randomMovie = movies.get(random.nextInt(movies.size()));
 
+        // Gets the video url using the movie's id, and pastes it to the video player
         String videoUrl = getResources().getString(R.string.api_movies_base_url) + randomMovie.getId() + ".mp4";
         Log.d("VIDEO_PLAYER", "Playing Video URL: " + videoUrl);
-
+        // Sets the video path to the provided movie
         videoView.setVideoPath(videoUrl);
+
+        //Presets video autoplayer settings
         videoView.setOnPreparedListener(mp -> {
-            mp.setVolume(0f, 0f);
-            mp.setLooping(true);
-            videoView.start();
+            mp.setVolume(0f, 0f); // Mute video
+            mp.setLooping(true);  // Loop playback
+            videoView.start();    // Autoplay
         });
     }
 }
