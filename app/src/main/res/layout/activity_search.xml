@@ -38,10 +38,10 @@
             />
 
         <!--   Search results container   -->
-        <include
+        <com.example.nakniki_netflix.widgets.MovieGrid
             android:id="@+id/results_layout"
-            layout="@layout/category_row"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
 
     </LinearLayout>
 

@@ -17,6 +17,7 @@ import java.util.List;
 
 public class MovieGrid extends LinearLayout {
     private RecyclerView moviesRecyclerView;
+    private MovieCardAdapter movieAdapter;
 
     /**
      * Constructor
@@ -41,7 +42,12 @@ public class MovieGrid extends LinearLayout {
      * @param movies The movies
      */
     public void setMovies(List<Movie> movies) {
-        MovieCardAdapter movieAdapter = new MovieCardAdapter((Activity) getContext(), movies);
-        moviesRecyclerView.setAdapter(movieAdapter);
+        if (movieAdapter == null) {
+            movieAdapter = new MovieCardAdapter((Activity) getContext(), movies);
+            moviesRecyclerView.setAdapter(movieAdapter);
+        } else {
+            movieAdapter.setMovies(movies);
+            moviesRecyclerView.getAdapter().notifyDataSetChanged();
+        }
     }
 }
