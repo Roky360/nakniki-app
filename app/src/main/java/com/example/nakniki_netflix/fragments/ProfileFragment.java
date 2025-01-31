@@ -82,13 +82,13 @@ public class ProfileFragment extends Fragment {
                     if (user.getEmail() != null) {
                         emailTextView.setText(user.getEmail());
                     }
-                    Log.e("debug", "Profile picture: " + user.getProfilePic());
+                    Log.e("debug", "Profile picture: " + user.getProfile_pic());
 
                     // if the profile picture is not null, set it to the AvatarCircle
-                    if (user.getProfilePic() != null) {
+                    if (user.getProfile_pic() != null) {
                         Log.e("debug", "Profile picture loaded ");
                         // Extract the avatar name from the profile picture path
-                        String profilePicPath = user.getProfilePic();
+                        String profilePicPath = user.getProfile_pic();
                         String[] parts = profilePicPath.split("/");
 
                         // Get the last part ("avatar2.png")
@@ -117,11 +117,8 @@ public class ProfileFragment extends Fragment {
 
         ViewModelUtils.observeUntil(live, resource -> {
             if (resource.getStatus() == Resource.Status.SUCCESS) {
-                Intent intent = new Intent(getActivity(), UnregisteredHomeActivity.class);
-                startActivity(intent);
-                FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-                transaction.remove(this);
-                transaction.commit();
+                // TODO redirect to home page
+                showAlert("log out...", "success");
             } else {
                 showAlert(resource.getMessage(), "error");
             }

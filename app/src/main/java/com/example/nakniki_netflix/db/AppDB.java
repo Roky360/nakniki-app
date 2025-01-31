@@ -10,7 +10,7 @@ import com.example.nakniki_netflix.entities.Category;
 import com.example.nakniki_netflix.entities.Movie;
 import com.example.nakniki_netflix.entities.User;
 
-@Database(entities = {User.class, Movie.class, Category.class}, version = 4)
+@Database(entities = {User.class, Movie.class, Category.class}, version = 5)
 public abstract class AppDB extends RoomDatabase {
     private static volatile AppDB instance;
 

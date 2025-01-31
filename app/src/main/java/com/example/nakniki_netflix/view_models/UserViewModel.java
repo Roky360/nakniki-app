@@ -23,6 +23,7 @@ public class UserViewModel extends ViewModel {
             Log.e("Debug", "User is null");
             user = repository.getUser(repository.userId);
         }
+
         return user;
     }
 

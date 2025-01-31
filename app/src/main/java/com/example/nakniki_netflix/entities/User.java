@@ -16,14 +16,14 @@ public class User {
 
     private String username;
     private String email;
-    private String profilePic;
+    private String profile_pic;
 
     // constructor
-    public User(@NonNull String id, String username, String email, String profilePic) {
+    public User(@NonNull String id, String username, String email, String profile_pic) {
         this.id = id;
         this.username = username;
         this.email = email;
-        this.profilePic = profilePic;
+        this.profile_pic = profile_pic;
     }
 
     // Getters and Setters
@@ -48,7 +48,7 @@ public class User {
         this.email = email;
     }
 
-    public String getProfilePic() {
-        return profilePic;
+    public String getProfile_pic() {
+        return profile_pic;
     }
 }
