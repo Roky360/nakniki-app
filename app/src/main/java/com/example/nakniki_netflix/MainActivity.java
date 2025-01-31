@@ -7,6 +7,7 @@ import android.os.Bundle;
 import com.example.nakniki_netflix.activities.SearchScreenActivity;
 import com.example.nakniki_netflix.api.Resource;
 import com.example.nakniki_netflix.entities.Movie;
+import com.example.nakniki_netflix.fragments.ProfileFragment;
 import com.example.nakniki_netflix.fragments.RegisteredHomeFragment;
 import com.example.nakniki_netflix.fragments.MoviesScreenFragment;
 import com.example.nakniki_netflix.repositories.MovieRepository;
@@ -57,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
             } else if (itemId == R.id.nav_movies_page) {
                 selectedFragment = new MoviesScreenFragment();
             } else if (itemId == R.id.nav_profile_page) {
-                selectedFragment = new ProfileTestFragment();
+                selectedFragment = new ProfileFragment();
             }
 
             if (selectedFragment != null) {
@@ -72,110 +73,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, SearchScreenActivity.class);
             startActivity(intent);
         });
-
-//        binding.fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAnchorView(R.id.fab)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-
-        // view model test
-//        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
-//        userViewModel.getUserData().observe(this, user -> {
-//            if (user != null) {
-//                Objects.requireNonNull(getSupportActionBar()).setTitle(user.getUsername());
-//            }
-//        });
-//
-//        binding.fab.setOnClickListener(view -> userViewModel.getUserData().setValue(new User("0", "Hemihemi " + i++, "", "", "")));
-
-//        CategoryDao categoryDao = AppDB.getInstance(this).categoryDao();
-//        CategoryAPI categoryAPI = RetrofitClient.getInstance().create(CategoryAPI.class);
-//        CategoryRepository repository = new CategoryRepository(categoryDao, categoryAPI);
-
-        // category view model test
-//        categoryViewModel = new ViewModelProvider(this, new CategoryViewModelFactory(new CategoryRepository())).get(CategoryViewModel.class);
-//
-//        categoryViewModel.getAllCategories().observe(this, categories -> {
-//            if (categories.getStatus() == Resource.Status.SUCCESS) {
-//                StringBuilder cats = new StringBuilder();
-//                for (Category category : categories.getData()) {
-//                    cats.append(category.getName()).append("\n");
-//                }
-//                binding.catList.setText(cats.toString());
-//            } else if (categories.getStatus() == Resource.Status.ERROR) {
-//                binding.catList.setText(categories.getMessage());
-//            } else {
-//                binding.catList.setText("Loading...");
-//            }
-//        });
-//
-//        binding.fab.setOnClickListener(view -> {
-//            categoryViewModel.addCategory(
-//                    new Category(String.valueOf(i), "New category! " + i++, true)
-//            );
-//        });
-
-        // movies view model test
-//        movieViewModel = new ViewModelProvider(this, new MovieViewModelFactory(new MovieRepository())).get(MovieViewModel.class);
-
-
-//        movieViewModel.getMoviesByCategories().observe(this, catWithMovies -> {
-//            if (catWithMovies.getStatus() == Resource.Status.SUCCESS) {
-//                StringBuilder cats = new StringBuilder();
-//                List<CategoryWithMovies> data = catWithMovies.getData();
-//                for (CategoryWithMovies cat : data) {
-//                    StringBuilder movies = new StringBuilder();
-//                    movies.append(cat.getCategory()).append(":\n");
-//                    for (Movie m : cat.getMovies()) {
-//                        movies.append("\t").append(m.getName()).append("\n");
-//                    }
-//                    cats.append(movies);
-//                }
-//                binding.catList.setText(cats.toString());
-//            } else if (catWithMovies.getStatus() == Resource.Status.ERROR) {
-//                binding.catList.setText(catWithMovies.getMessage());
-//            } else {
-//                binding.catList.setText("Loading...");
-//            }
-//        });
-
-//        movieViewModel.searchMovies("a").observe(this, resource -> {
-//            if (resource.getStatus() == Resource.Status.SUCCESS) {
-//                List<Movie> res = resource.getData();
-//                StringBuilder movies = new StringBuilder();
-//                for (Movie m : res) {
-//                    movies.append(m.getName()).append("\n");
-//                }
-//
-//                binding.catList.setText(res.toString());
-//            } else {
-//                binding.catList.setText(resource.getMessage());
-//            }
-//        });
-
-//        binding.fab.setOnClickListener(view -> {
-//            ViewModelUtils.observeUntil(movieViewModel.searchMovies(binding.editText.getText().toString()),
-//                    resource -> {
-//                        if (resource.getStatus() == Resource.Status.SUCCESS) {
-//                            List<Movie> res = resource.getData();
-//                            StringBuilder movies = new StringBuilder();
-//                            for (Movie m : res) {
-//                                movies.append(m.getName()).append("\n");
-//                            }
-//
-//                            binding.catList.setText(movies.toString());
-//                        } else {
-//                            binding.catList.setText(resource.getMessage());
-//                        }
-//
-//                    },
-//                    resource -> resource.getStatus() == Resource.Status.SUCCESS
-//            );
-//        });
     }
 
     @Override
@@ -185,7 +82,4 @@ public class MainActivity extends AppCompatActivity {
                 || super.onSupportNavigateUp();
     }
 
-//    public static Context getAppContext() {
-//        return instance.getApplicationContext();
-//    }
 }
