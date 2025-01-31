@@ -82,11 +82,9 @@ public class ProfileFragment extends Fragment {
                     if (user.getEmail() != null) {
                         emailTextView.setText(user.getEmail());
                     }
-                    Log.e("debug", "Profile picture: " + user.getProfile_pic());
 
                     // if the profile picture is not null, set it to the AvatarCircle
                     if (user.getProfile_pic() != null) {
-                        Log.e("debug", "Profile picture loaded ");
                         // Extract the avatar name from the profile picture path
                         String profilePicPath = user.getProfile_pic();
                         String[] parts = profilePicPath.split("/");
@@ -96,7 +94,6 @@ public class ProfileFragment extends Fragment {
 
                         // Remove the file extension ("avatar2")
                         avatarName = avatarName.substring(0, avatarName.lastIndexOf('.'));
-                        Log.e("debug", "Avatar name: " + avatarName);;
                         // search the avatar and put it on the screen
                         int avatarResourceId = getResources().getIdentifier(avatarName, "drawable", getActivity().getPackageName());
                         if (avatarResourceId != 0) {
@@ -117,8 +114,13 @@ public class ProfileFragment extends Fragment {
 
         ViewModelUtils.observeUntil(live, resource -> {
             if (resource.getStatus() == Resource.Status.SUCCESS) {
-                // TODO redirect to home page
+                // Show logout success message
                 showAlert("log out...", "success");
+
+                // Start UnregisteredHomeActivity and clear the back stack
+                Intent intent = new Intent(requireContext(), UnregisteredHomeActivity.class);
+                startActivity(intent);
+                requireActivity().finish();
             } else {
                 showAlert(resource.getMessage(), "error");
             }
