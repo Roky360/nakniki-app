@@ -1,5 +1,6 @@
 package com.example.nakniki_netflix.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -61,8 +62,8 @@ public class MovieInfoActivity extends AppCompatActivity {
             finish(); // Close the current activity and return to the previous one
         });
 
-        // TODO - navigate to the watch movie
-        // watchNowButton.setOnClickListener(v -> navigateToWatchMovie(movie));
+        // Navigates to the watch movie activity
+        watchNowButton.setOnClickListener(v -> navigateToWatchMovie(movie));
     }
 
     private void populateMovieDetails(Movie movie) {
@@ -140,5 +141,11 @@ public class MovieInfoActivity extends AppCompatActivity {
         } catch (Exception e) {
             return "Unknown Date";
         }
+    }
+
+    private void navigateToWatchMovie(Movie movie) {
+        Intent intent = new Intent(MovieInfoActivity.this, WatchMovieActivity.class);
+        intent.putExtra("movieId", movie.getId());  // Pass the movie ID
+        startActivity(intent);
     }
 }
