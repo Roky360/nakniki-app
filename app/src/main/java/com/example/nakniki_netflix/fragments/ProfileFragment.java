@@ -1,6 +1,8 @@
 package com.example.nakniki_netflix.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +12,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.nakniki_netflix.R;
 import com.example.nakniki_netflix.activities.LoginActivity;
+import com.example.nakniki_netflix.activities.UnregisteredHomeActivity;
 import com.example.nakniki_netflix.api.Resource;
 import com.example.nakniki_netflix.repositories.UserRepository;
 import com.example.nakniki_netflix.view_models.UserViewModel;
@@ -30,14 +34,16 @@ public class ProfileFragment extends Fragment {
     private TextView usernameTextView, emailTextView;
     private Button logoutButton;
     private UserViewModel userViewModel;
+
+    private Alert alert;
     private AvatarCircle avatarCircle; // Declare avatarCircle as a class-level variable
-    Alert alert = new Alert(getActivity());
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
 
+        alert = new Alert(requireActivity());
         // Initialize views
         avatarContainer = rootView.findViewById(R.id.avatarContainer);
         usernameTextView = rootView.findViewById(R.id.username);
@@ -78,9 +84,9 @@ public class ProfileFragment extends Fragment {
                     }
 
                     // if the profile picture is not null, set it to the AvatarCircle
-                    if (user.getProfilePic() != null && !user.getProfilePic().isEmpty()) {
+                    if (user.getProfile_pic() != null) {
                         // Extract the avatar name from the profile picture path
-                        String profilePicPath = user.getProfilePic();
+                        String profilePicPath = user.getProfile_pic();
                         String[] parts = profilePicPath.split("/");
 
                         // Get the last part ("avatar2.png")
@@ -88,7 +94,6 @@ public class ProfileFragment extends Fragment {
 
                         // Remove the file extension ("avatar2")
                         avatarName = avatarName.substring(0, avatarName.lastIndexOf('.'));
-
                         // search the avatar and put it on the screen
                         int avatarResourceId = getResources().getIdentifier(avatarName, "drawable", getActivity().getPackageName());
                         if (avatarResourceId != 0) {
@@ -109,8 +114,13 @@ public class ProfileFragment extends Fragment {
 
         ViewModelUtils.observeUntil(live, resource -> {
             if (resource.getStatus() == Resource.Status.SUCCESS) {
-                // TODO redirect to home page
+                // Show logout success message
                 showAlert("log out...", "success");
+
+                // Start UnregisteredHomeActivity and clear the back stack
+                Intent intent = new Intent(requireContext(), UnregisteredHomeActivity.class);
+                startActivity(intent);
+                requireActivity().finish();
             } else {
                 showAlert(resource.getMessage(), "error");
             }

@@ -1,5 +1,7 @@
 package com.example.nakniki_netflix.view_models;
 
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -18,8 +20,10 @@ public class UserViewModel extends ViewModel {
 
     public LiveData<Resource<User>> getUserData() {
         if (user == null) {
+            Log.e("Debug", "User is null");
             user = repository.getUser(repository.userId);
         }
+
         return user;
     }
 

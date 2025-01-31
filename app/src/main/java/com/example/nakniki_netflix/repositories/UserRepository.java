@@ -33,7 +33,7 @@ public class UserRepository {
     private final UserAPI userAPI;
     private final Executor executor;
     private final TokenStorage tokenStorage;
-    public String userId = null; // represents the user id if registered (null if not)
+    public static String userId = null; // represents the user id if registered (null if not)
 
     public UserRepository() {
         UserDao categoryDao = AppDB.getInstance(MyApplication.getAppContext()).userDao();
@@ -45,6 +45,7 @@ public class UserRepository {
     }
 
     public LiveData<Resource<Void>> login(String username, String password) {
+        Log.e("NAKNIKI-NETFLIX", "STARTTTTTTTTTTTTTT");
         MutableLiveData<Resource<Void>> liveData = new MutableLiveData<>();
         liveData.setValue(Resource.loading(null));
 
@@ -59,8 +60,9 @@ public class UserRepository {
                     liveData.postValue(Resource.success(null));
 
                     DecodedJWT jwt = JWT.decode(loginResult.getToken());
-                    String userId = jwt.getClaim("user_id").asString();
-                    getUser(userId);
+                    userId = jwt.getClaim("user_id").asString();
+                    Log.e("debug", "User logged in with ID: " + userId);
+                    //getUser(userId);
                 } else {
                     if (loginResult != null) {
                         liveData.postValue(Resource.error(loginResult.getError(), null));
@@ -79,32 +81,40 @@ public class UserRepository {
 
     public LiveData<Resource<User>> getUser(String userId) {
         MutableLiveData<Resource<User>> liveData = new MutableLiveData<>();
-        // if there is no token then the user is logged out
+
         if (tokenStorage.getTokenRaw() == null) {
             liveData.setValue(Resource.error("User not logged in.", null));
+            Log.e("debug", "User is not logged in, skipping getUser()");
             return liveData;
         }
+
         liveData.setValue(Resource.loading(null));
+        Log.e("debug", "Starting getUser() for user ID: " + userId);
 
         executor.execute(() -> {
             try {
+                Log.e("debug", "Fetching user data from API...");
                 Response<User> res = userAPI.getUser(userId).execute();
                 User user = res.body();
+                Log.e("debug", "PRINTING USERNAME: " + user.getUsername());
 
                 if (res.code() == 200 && user != null) {
-                    userDao.insert(user);
                     liveData.postValue(Resource.success(user));
+                    Log.e("debug", "User successfully fetched: " + user.getUsername());
                 } else {
                     String errorMessage = ErrorResponse.getErrorMessage(res);
                     liveData.postValue(Resource.error(errorMessage, null));
+                    Log.e("debug", "Failed to fetch user: " + errorMessage);
                 }
             } catch (Exception e) {
                 liveData.postValue(Resource.error(e.getMessage(), null));
+                Log.e("debug", "Exception in getUser(): " + e.getMessage());
             }
         });
 
         return liveData;
     }
+
 
     public LiveData<Resource<Void>> createUser(String username, String password, String email, String profilePic) {
         MutableLiveData<Resource<Void>> liveData = new MutableLiveData<>();
@@ -134,9 +144,8 @@ public class UserRepository {
         liveData.setValue(Resource.loading(null));
 
         executor.execute(() -> {
-            userDao.delete(user);
             tokenStorage.clearToken();
-            this.userId = null;
+            userId = null;
             liveData.postValue(Resource.success(null));
         });
 
