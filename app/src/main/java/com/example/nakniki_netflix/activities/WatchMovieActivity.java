@@ -1,8 +1,6 @@
 package com.example.nakniki_netflix.activities;
 
 import android.content.pm.ActivityInfo;
-import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,7 +39,7 @@ public class WatchMovieActivity extends AppCompatActivity {
         videoView = findViewById(R.id.video_player);
 
         // Construct the movie URL
-        String videoUrl = getResources().getString(R.string.api_movies_base_url) + movieId + ".mp4";
+        String videoUrl = getResources().getString(R.string.api_base_url) + getResources().getString(R.string.api_movies_base_url) + movieId + ".mp4";
         Log.d(TAG, "Playing Movie URL: " + videoUrl);
 
         videoView.setVideoPath(videoUrl);

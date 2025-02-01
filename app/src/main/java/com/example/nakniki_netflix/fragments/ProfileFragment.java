@@ -2,22 +2,18 @@ package com.example.nakniki_netflix.fragments;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.nakniki_netflix.R;
-import com.example.nakniki_netflix.activities.LoginActivity;
 import com.example.nakniki_netflix.activities.UnregisteredHomeActivity;
 import com.example.nakniki_netflix.api.Resource;
 import com.example.nakniki_netflix.repositories.UserRepository;
@@ -103,8 +99,6 @@ public class ProfileFragment extends Fragment {
                         }
                     }
                 }
-            } else {
-                showAlert(resource.getMessage(), "error");
             }
        }, resource -> resource.getStatus() == Resource.Status.SUCCESS);
     }

@@ -1,6 +1,5 @@
 package com.example.nakniki_netflix.fragments;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -64,8 +63,10 @@ public class RegisteredHomeFragment extends Fragment {
                 categoriesRow.removeAllViews();
 
                 for (CategoryWithMovies category : resource.getData()) {
-                    movies.addAll(category.getMovies());
-                    addCategoryRow(category);
+                    if (!category.getMovies().isEmpty()) {
+                        movies.addAll(category.getMovies());
+                        addCategoryRow(category);
+                    }
                 }
 
                 playRandomMovie();
