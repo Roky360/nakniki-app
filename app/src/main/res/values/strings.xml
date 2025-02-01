@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Nakniki-Netflix</string>
-    <string name="api_base_url">http://192.168.68.102:21069/api/</string>
-    <string name="api_movies_base_url">http://192.168.68.102:21069/api/uploads/movies/</string>
+    <string name="api_base_url">http://10.0.2.2:21069/api/</string>
+    <string name="api_movies_base_url">uploads/movies/</string>
 
     <!-- Strings used for fragments for navigation -->
     <string name="first_fragment_label">First Fragment</string>
